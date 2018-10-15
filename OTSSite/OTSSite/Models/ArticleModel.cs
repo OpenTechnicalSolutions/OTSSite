@@ -10,11 +10,13 @@ namespace OTSSite.Models
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(256)]
-        public string Name { get; set; }
+        [StringLength(64)]
+        public string Title { get; set; }
+        [Required]
+        public string AuthorId { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime TimeStamp { get; set; }
-        public string Article { get; set; }
+        public string ArticleFilePath { get; set; }
     }
 }

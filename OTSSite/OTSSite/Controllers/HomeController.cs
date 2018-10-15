@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OTSSite.Models;
 using OTSSite.Repositories;
+using OTSSite.ViewModel;
 
 namespace OTSSite.Controllers
 {
@@ -20,7 +23,29 @@ namespace OTSSite.Controllers
 
         public IActionResult Index()
         {
-            return View(_articleRepository.GetGroupByTime(DateTime.Now, 5));
+
+            var articles = _articleRepository.GetGroupByTime(DateTime.Now, 5);
+            var articleviewmodels = new List<ArticleViewModel>();
+
+            foreach(var a in articles)
+            {
+                var avm = new ArticleViewModel
+                {
+                    Title = a.Title,
+                    AutherId = a.AuthorId,
+                    TimeStamp = a.TimeStamp
+                };
+                using (StreamReader sr = new StreamReader(new FileStream(a.ArticleFilePath, FileMode.Open, FileAccess.Read),Encoding.UTF8))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    string line;
+                    while((line = sr.ReadLine()) != null)                 
+                        sb.AppendLine(line);
+
+                    avm.Article = sb.ToString();
+                }
+            }
+            return View(articleviewmodels);
         }
 
         public IActionResult About()
