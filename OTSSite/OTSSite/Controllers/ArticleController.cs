@@ -28,7 +28,7 @@ namespace OTSSite.Controllers
             return View(_articleRepository.GetById(id));
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Create(int id)
         {
             return View();

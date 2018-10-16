@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +9,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OTSSite.Data;
+using OTSSiteRazor.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OTSSite.Repositories;
 
-namespace OTSSite
+namespace OTSSiteRazor
 {
     public class Startup
     {
@@ -35,13 +34,12 @@ namespace OTSSite
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient<ArticleRepository, ArticleRepository>();
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -56,7 +54,7 @@ namespace OTSSite
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
@@ -66,12 +64,7 @@ namespace OTSSite
 
             app.UseAuthentication();
 
-            app.UseMvc()/*routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            })*/;
+            app.UseMvc();
         }
     }
 }

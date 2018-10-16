@@ -9,12 +9,4 @@
 {
     var author = userManager.Users.FirstOrDefault(u => u.Id == article.AuthorId);
     <partial name="Article/Article.cshtml" model="article" />
-    <div id="article-list">
-        <div id="title"><a asp-controller="Article" asp-action="Article">@article.Title</a></div>
-        <div id="author">@author.UserName</div>
-        <div id="">@article.TimeStamp</div>
-        <div>
-            @article.Article
-        </div>
-    </div>
 }
