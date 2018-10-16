@@ -36,6 +36,11 @@ namespace OTSSite.Repositories
             return _dbContext.Articles;
         }
 
+        public IQueryable<ArticleModel> Published()
+        {
+            return _dbContext.Articles.Where(a => a.published == true);
+        }
+
         public ArticleModel GetById(int id)
         {
             return _dbContext.Articles.FirstOrDefault(a => a.Id == id);
@@ -48,7 +53,7 @@ namespace OTSSite.Repositories
 
         public IQueryable<ArticleModel> GetGroupByTime (DateTime maxDate, int numOfArticles)
         {
-            var articles = _dbContext.Articles.Where(a => a.TimeStamp <= maxDate).Take(numOfArticles);
+            var articles = Published().Where(a => a.TimeStamp <= maxDate).Take(numOfArticles);
             return articles;
         }
     }

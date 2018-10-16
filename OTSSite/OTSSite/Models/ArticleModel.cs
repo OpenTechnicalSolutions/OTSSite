@@ -17,6 +17,8 @@ namespace OTSSite.Models
         [Required]
         [DataType(DataType.Date)]
         public DateTime TimeStamp { get; set; }
-        public string ArticleFilePath { get; set; }
+        public string Article { get; set; }
+
+        public bool published { get; set; }
     }
 }

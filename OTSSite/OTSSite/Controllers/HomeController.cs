@@ -23,29 +23,8 @@ namespace OTSSite.Controllers
 
         public IActionResult Index()
         {
-
             var articles = _articleRepository.GetGroupByTime(DateTime.Now, 5);
-            var articleviewmodels = new List<ArticleViewModel>();
-
-            foreach(var a in articles)
-            {
-                var avm = new ArticleViewModel
-                {
-                    Title = a.Title,
-                    AutherId = a.AuthorId,
-                    TimeStamp = a.TimeStamp
-                };
-                using (StreamReader sr = new StreamReader(new FileStream(a.ArticleFilePath, FileMode.Open, FileAccess.Read),Encoding.UTF8))
-                {
-                    StringBuilder sb = new StringBuilder();
-                    string line;
-                    while((line = sr.ReadLine()) != null)                 
-                        sb.AppendLine(line);
-
-                    avm.Article = sb.ToString();
-                }
-            }
-            return View(articleviewmodels);
+            return View(articles);
         }
 
         public IActionResult About()

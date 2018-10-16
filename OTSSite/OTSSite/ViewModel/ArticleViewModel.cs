@@ -7,7 +7,7 @@ namespace OTSSite.ViewModel
 {
     public class ArticleViewModel
     {
-        public string Title { get; set; }
+        public string ArticleTitle { get; set; }
         public string AutherId { get; set; }
         public DateTime TimeStamp { get; set; }
         public string Article { get; set; }

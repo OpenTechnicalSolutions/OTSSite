@@ -1,0 +1,22 @@
+﻿@model OTSSite.Models.ArticleModel
+@inject Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser> userManager
+@{
+    ViewData["Title"] = "Article";
+}
+
+<div>@Model.Title</div>
+<div>
+    @{
+        var user = userManager.Users.FirstOrDefault(u => u.Id == Model.AuthorId).UserName;
+    }
+    <a asp-action="Article" asp-controller="Article" asp-route-id="@Model.Id">
+        <div id="title">
+            @Model.Title
+        </div>
+    </a>
+    <div id="author">@user</div>
+    <div id="publish-time">@Model.TimeStamp</div>
+    <article>
+        @Model.Article
+    </article>
+</div>

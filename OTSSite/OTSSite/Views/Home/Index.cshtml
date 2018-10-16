@@ -1,35 +1,20 @@
-﻿@model OTSSite.ViewModel.ArticleViewModel
-
+﻿@model IEnumerable<ArticleModel>
+@inject Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser> userManager
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
-
-<div>
-    <h4>ArticleModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayTitleFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TimeStamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Article)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Article)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@foreach (var article in Model)
+{
+    var author = userManager.Users.FirstOrDefault(u => u.Id == article.AuthorId);
+    <partial name="Article/Article.cshtml" model="article" />
+    <div id="article-list">
+        <div id="title"><a asp-controller="Article" asp-action="Article">@article.Title</a></div>
+        <div id="author">@author.UserName</div>
+        <div id="">@article.TimeStamp</div>
+        <div>
+            @article.Article
+        </div>
+    </div>
+}
