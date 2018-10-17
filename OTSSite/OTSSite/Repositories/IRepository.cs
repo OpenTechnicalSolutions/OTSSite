@@ -7,11 +7,11 @@ namespace OTSSite.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        void Add(T data);
-        void Update(T data);
-        IQueryable<T> GetAll();
+        IEnumerable<T> GetAll();
         T GetById(int id);
+        void Add(T item);
         void Delete(int id);
-        void Delete(T data);
+        void Delete(T item);
+        void Update(T item);
     }
 }

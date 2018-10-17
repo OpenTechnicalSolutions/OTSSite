@@ -14,7 +14,7 @@ namespace OTSSite.Data
         {
         }
 
-        public DbSet<ArticleModel> Articles { get; set; }
-        public DbSet<CommentModel> Comments { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

@@ -7,54 +7,63 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Repositories
 {
-    public class ArticleRepository : IRepository<ArticleModel>
+    public class ArticleRepository : IRepository<Article>
     {
-        private ApplicationDbContext _dbContext { get; set; }
+        private ApplicationDbContext _dbContext;
 
-        public ArticleRepository(ApplicationDbContext dbcontext)
+        public ArticleRepository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbcontext;
+            _dbContext = dbContext;
         }
 
-        public void Add(ArticleModel data)
+        public void Add(Article item)
         {
-            _dbContext.Articles.Add(data);
+            _dbContext.Articles.Add(item);
         }
 
         public void Delete(int id)
         {
-            Delete(_dbContext.Articles.FirstOrDefault(a => a.Id == id));
+            Delete(GetById(id));
         }
 
-        public void Delete(ArticleModel data)
+        public void Delete(Article item)
         {
-            _dbContext.Remove(data);
+            _dbContext.Articles.Remove(item);
         }
 
-        public IQueryable<ArticleModel> GetAll()
+        public IEnumerable<Article> GetAll()
         {
             return _dbContext.Articles;
         }
 
-        public IQueryable<ArticleModel> Published()
-        {
-            return _dbContext.Articles.Where(a => a.published == true);
-        }
-
-        public ArticleModel GetById(int id)
+        public Article GetById(int id)
         {
             return _dbContext.Articles.FirstOrDefault(a => a.Id == id);
         }
 
-        public void Update(ArticleModel data)
+        public void Update(Article item)
         {
-            _dbContext.Articles.Update(data);
+            _dbContext.Articles.Update(item);
         }
 
-        public IQueryable<ArticleModel> GetGroupByTime (DateTime maxDate, int numOfArticles)
+        public IEnumerable<Article> GetPublished()
         {
-            var articles = Published().Where(a => a.TimeStamp <= maxDate).Take(numOfArticles);
-            return articles;
+            return GetAll().Where(a => a.Published == true);
+        }
+
+        public IEnumerable<Article> GetUnPublished()
+        {
+            return GetAll().Where(a => a.Published == false);
+        }
+
+        public IEnumerable<Article> GetByAuthorPublished(string authorId)
+        {
+            return GetPublished().Where(a => a.AuthorId == authorId);
+        }
+
+        public IEnumerable<Article> GetByAuthorUnPublished(string authorId)
+        {
+            return GetUnPublished().Where(a => a.AuthorId == authorId);
         }
     }
 }

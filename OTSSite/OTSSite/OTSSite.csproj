@@ -1,24 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>aspnet-OTSSite-B545BE63-6ABA-409D-80BD-1262FFB07F52</UserSecretsId>
-    <!-- aspnet/BuildTools#662 Don't police what version of NetCoreApp we use -->
-    <NETCoreAppMaximumVersion>99.9</NETCoreAppMaximumVersion>
-    <RuntimeFrameworkVersion>2.2.0-preview1-26529-01</RuntimeFrameworkVersion>
+    <TargetFramework>netcoreapp2.1.5</TargetFramework>
+    <UserSecretsId>aspnet-OTSSite-961FEE09-AF79-4929-BB8F-D3397155A244</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <DotNetCoreRuntime Include="2.2.0-preview1-26529-01" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0-preview1-34355" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
   </ItemGroup>
 
 </Project>

@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Repositories
 {
-    public class CommentRepository : IRepository<CommentModel>
+    public class CommentRepository : IRepository<Comment>
     {
-        private ApplicationDbContext _dbContext;
+        public ApplicationDbContext _dbContext;
 
         public CommentRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public void Add(CommentModel data)
+        public void Add(Comment item)
         {
-            _dbContext.Comments.Add(data);
+            _dbContext.Comments.Add(item);
         }
 
         public void Delete(int id)
@@ -26,39 +26,39 @@ namespace OTSSite.Repositories
             Delete(_dbContext.Comments.FirstOrDefault(c => c.Id == id));
         }
 
-        public void Delete(CommentModel data)
+        public void Delete(Comment item)
         {
-            Delete(data);
+            _dbContext.Comments.Remove(item);
         }
 
-        public IQueryable<CommentModel> GetAll()
+        public IEnumerable<Comment> GetAll()
         {
-            return (_dbContext.Comments);
+            return _dbContext.Comments;
         }
 
-        public CommentModel GetById(int id)
+        public Comment GetById(int id)
         {
-            return (_dbContext.Comments.FirstOrDefault(c => c.Id == id));
+            return GetAll().FirstOrDefault(c => c.Id == id);
         }
 
-        public void Update(CommentModel data)
+        public void Update(Comment item)
         {
-            _dbContext.Comments.Update(data);
+            _dbContext.Comments.Update(item);
         }
 
-        public IQueryable<CommentModel> GetArticleComments(int articleId)
+        public IEnumerable<Comment> GetByArticleId(int articleId)
         {
-            return (_dbContext.Comments.Where(c => c.Id == articleId));
+            return GetAll().Where(c => c.ArticleId == articleId);
         }
 
-        public IQueryable<CommentModel> GetTopLevelComments(int articleId)
+        public IEnumerable<Comment> GetTopLevel(int articleId)
         {
-            return (GetArticleComments(articleId).Where(c => c.ReplyCommentId == -1));
+            return GetByArticleId(articleId).Where(c => c.ReplyId == 0);
         }
 
-        public IQueryable<CommentModel> GetReplyComments(int replyCommentId)
+        public IEnumerable<Comment> GetChildComments(int replyId)
         {
-            return (_dbContext.Comments.Where(c => c.ReplyCommentId == replyCommentId));
+            return GetAll().Where(c => c.ReplyId == replyId);
         }
     }
 }
