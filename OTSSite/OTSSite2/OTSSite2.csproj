@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.1.5</TargetFramework>
     <UserSecretsId>aspnet-OTSSite2-6404C487-15C2-4CF5-8ECD-646A8605F2EB</UserSecretsId>
     <AssemblyName>OTSSite</AssemblyName>
   </PropertyGroup>

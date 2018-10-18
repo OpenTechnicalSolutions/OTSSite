@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using OTSSite.Data;
 using OTSSite.Models;
 using OTSSite.Repositories;
+using OTSSite2.VIewModel;
 
 namespace OTSSite.Pages.Article
 {
@@ -26,7 +27,7 @@ namespace OTSSite.Pages.Article
 
         public Models.Article Article { get; set; }
         public IdentityUser Author { get; set; }
-        public IEnumerable<Comment> TopLevelComments { get; set; }
+        public List<CommentViewModel> TopLevelComments { get; set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -34,17 +35,27 @@ namespace OTSSite.Pages.Article
             {
                 return NotFound();
             }
-
+            //Get Articles
             Article = _articleRepository.GetById(id.Value);
             
             if (Article == null)
             {
                 return NotFound();
             }
-
+           //Get Author
             Author = _userManager.Users.FirstOrDefault(u => u.Id == Article.AuthorId);
-            TopLevelComments = _commentRepository.GetTopLevel(Article.Id);
-
+            //Get top level comments
+            var toplvlcomments = _commentRepository.GetTopLevel(Article.Id);
+            //Create list of top level comments
+            foreach(var c in toplvlcomments)
+            {
+                var newcommodel = new CommentViewModel
+                {
+                    Comment = c,
+                    Children = _commentRepository.GetChildComments(c.ArticleId).ToArray()
+                };
+                TopLevelComments.Add(newcommodel);
+            }           
             return Page();
         }
     }

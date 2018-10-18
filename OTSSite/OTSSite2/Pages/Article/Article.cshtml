@@ -18,5 +18,15 @@
     <article id="article-text">
         @Html.DisplayFor(model => model.Article.ArticleText)
     </article>
+    <div id="comment-box">
+    @{ 
+        foreach(var c in Model.TopLevelComments)
+        {
+            <div id="comment">
+
+            </div>
+        }
+    }
+    </div>
 </div>
 
