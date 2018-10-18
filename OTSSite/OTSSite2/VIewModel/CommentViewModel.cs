@@ -10,6 +10,7 @@ namespace OTSSite2.VIewModel
     {
         public Comment Comment { get; set; }
         public string Author { get; set; }
-        public CommentViewModel[] Children { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public int Children { get; set; }
     }
 }

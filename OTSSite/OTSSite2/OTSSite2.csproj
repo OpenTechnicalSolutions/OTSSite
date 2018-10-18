@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1.5</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-OTSSite2-6404C487-15C2-4CF5-8ECD-646A8605F2EB</UserSecretsId>
     <AssemblyName>OTSSite</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
   </ItemGroup>
@@ -20,7 +20,7 @@
     <Content Update="Pages\Article\Article.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Article\Comments.cshtml">
+    <Content Update="Pages\Article\Comment.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Contact.cshtml">
@@ -71,11 +71,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Article\Article.cshtml" />
-    <_ContentIncludedByDefault Remove="Pages\Article\Comments.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Article\Comments.cshtml" />
+    <Folder Include="VIewModel\" />
   </ItemGroup>
 
 </Project>

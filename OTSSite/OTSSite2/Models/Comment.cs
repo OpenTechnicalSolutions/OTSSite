@@ -12,11 +12,11 @@ namespace OTSSite.Models
         [Required]
         public int ArticleId { get; set; }
         public int ReplyId { get; set; }
+        public DateTime TimeStamp { get; set; }
         [Required]
         public string AuthorId { get; set; }
         [Required]
         public string CommentText { get; set; }
-
         public bool Quarantined { get; set; }
         public bool Hidden { get; set; }
     }

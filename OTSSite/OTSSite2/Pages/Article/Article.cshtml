@@ -20,10 +20,16 @@
     </article>
     <div id="comment-box">
     @{ 
-        foreach(var c in Model.TopLevelComments)
+        foreach (var c in Model.TopLevelComments)
         {
+            @Html.RenderPartial("Comment.cshtml", )
             <div id="comment">
-
+                <div>@c.Author</div>
+                <div>@c.TimeStamp</div>
+                <div>@c.Comment</div>
+            </div>
+            <div id="show-child-comments">
+                View @c.Children Replies
             </div>
         }
     }

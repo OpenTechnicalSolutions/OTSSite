@@ -42,7 +42,7 @@ namespace OTSSite.Pages.Article
             {
                 return NotFound();
             }
-           //Get Author
+            //Get Author
             Author = _userManager.Users.FirstOrDefault(u => u.Id == Article.AuthorId);
             //Get top level comments
             var toplvlcomments = _commentRepository.GetTopLevel(Article.Id);
@@ -52,7 +52,9 @@ namespace OTSSite.Pages.Article
                 var newcommodel = new CommentViewModel
                 {
                     Comment = c,
-                    Children = _commentRepository.GetChildComments(c.ArticleId).ToArray()
+                    Author = _userManager.Users.FirstOrDefault(com => com.Id == c.AuthorId).UserName,
+                    TimeStamp = c.TimeStamp,
+                    Children = _commentRepository.GetChildComments(c.ArticleId).Count()
                 };
                 TopLevelComments.Add(newcommodel);
             }           
