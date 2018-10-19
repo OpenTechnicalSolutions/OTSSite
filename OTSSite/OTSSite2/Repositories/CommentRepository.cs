@@ -1,5 +1,6 @@
 ﻿using OTSSite.Data;
-using OTSSite.Models;
+using OTSSite2.Models;
+using OTSSite2.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,19 @@ namespace OTSSite.Repositories
         public void Add(Comment item)
         {
             _dbContext.Comments.Add(item);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
             Delete(_dbContext.Comments.FirstOrDefault(c => c.Id == id));
+
         }
 
         public void Delete(Comment item)
         {
             _dbContext.Comments.Remove(item);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Comment> GetAll()
@@ -44,6 +48,7 @@ namespace OTSSite.Repositories
         public void Update(Comment item)
         {
             _dbContext.Comments.Update(item);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Comment> GetByArticleId(int articleId)

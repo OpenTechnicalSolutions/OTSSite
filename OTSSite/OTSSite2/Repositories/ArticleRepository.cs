@@ -1,5 +1,7 @@
-﻿using OTSSite.Data;
-using OTSSite.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OTSSite.Data;
+using OTSSite2.Models;
+using OTSSite2.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace OTSSite.Repositories
         public void Add(Article item)
         {
             _dbContext.Articles.Add(item);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -29,6 +32,7 @@ namespace OTSSite.Repositories
         public void Delete(Article item)
         {
             _dbContext.Articles.Remove(item);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Article> GetAll()
@@ -43,7 +47,8 @@ namespace OTSSite.Repositories
 
         public void Update(Article item)
         {
-            _dbContext.Articles.Update(item);
+            _dbContext.Attach(item).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Article> GetPublished()
@@ -64,6 +69,11 @@ namespace OTSSite.Repositories
         public IEnumerable<Article> GetByAuthorUnPublished(string authorId)
         {
             return GetUnPublished().Where(a => a.AuthorId == authorId);
+        }
+
+        public bool Exists(int articleId)
+        {
+            return _dbContext.Articles.Any(a => a.Id == articleId);
         }
     }
 }

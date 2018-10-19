@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using OTSSite.Data;
-using OTSSite.Models;
+using OTSSite2.Models;
 using OTSSite.Repositories;
 using OTSSite2.VIewModel;
 
-namespace OTSSite.Pages.Article
+namespace OTSSite.Pages.Articles
 {
     public class ArticleModel : PageModel
     {
@@ -25,9 +25,9 @@ namespace OTSSite.Pages.Article
             _commentRepository = commentRepository;
         }
 
-        public Models.Article Article { get; set; }
+        public OTSSite2.Models.Article Article { get; set; }
         public IdentityUser Author { get; set; }
-        public List<CommentViewModel> TopLevelComments { get; set; }
+        public List<OTSSite2.Models.Comment> TopLevelComments { get; set; }
 
         public IActionResult OnGet(int? id)
         {
@@ -45,19 +45,7 @@ namespace OTSSite.Pages.Article
             //Get Author
             Author = _userManager.Users.FirstOrDefault(u => u.Id == Article.AuthorId);
             //Get top level comments
-            var toplvlcomments = _commentRepository.GetTopLevel(Article.Id);
-            //Create list of top level comments
-            foreach(var c in toplvlcomments)
-            {
-                var newcommodel = new CommentViewModel
-                {
-                    Comment = c,
-                    Author = _userManager.Users.FirstOrDefault(com => com.Id == c.AuthorId).UserName,
-                    TimeStamp = c.TimeStamp,
-                    Children = _commentRepository.GetChildComments(c.ArticleId).Count()
-                };
-                TopLevelComments.Add(newcommodel);
-            }           
+            TopLevelComments = _commentRepository.GetTopLevel(Article.Id).ToList();        
             return Page();
         }
     }

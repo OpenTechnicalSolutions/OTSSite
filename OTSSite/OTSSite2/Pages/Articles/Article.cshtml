@@ -1,5 +1,5 @@
 ﻿@page
-@model OTSSite.Pages.Article.ArticleModel
+@model OTSSite.Pages.Articles.ArticleModel
 
 @{
     ViewData["Title"] = "Article";
@@ -18,19 +18,16 @@
     <article id="article-text">
         @Html.DisplayFor(model => model.Article.ArticleText)
     </article>
+    <div id="comment-post">
+        @{ var newcommvdd = new ViewDataDictionary(ViewData) { {"articleId",Model.Article.Id } }; }
+        <partial name="/Comment/Create.cshtml" view-data="newcommvdd" />
+    </div>
     <div id="comment-box">
     @{ 
         foreach (var c in Model.TopLevelComments)
         {
-            @Html.RenderPartial("Comment.cshtml", )
-            <div id="comment">
-                <div>@c.Author</div>
-                <div>@c.TimeStamp</div>
-                <div>@c.Comment</div>
-            </div>
-            <div id="show-child-comments">
-                View @c.Children Replies
-            </div>
+             var vdd = new ViewDataDictionary(ViewData) { { "commentObj", c } };
+             <partial name="/Comment/Comment.cshtml" view-data="vdd" />
         }
     }
     </div>

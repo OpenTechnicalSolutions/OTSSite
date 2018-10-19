@@ -17,10 +17,10 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Article\Article.cshtml">
+    <Content Update="Pages\Articles\Article.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Article\Comment.cshtml">
+    <Content Update="Pages\Comment\Comment.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Contact.cshtml">
@@ -66,11 +66,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Article\Article.cshtml" />
+    <UpToDateCheckInput Remove="Pages\Articles\Article.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Article\Article.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Articles\Article.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

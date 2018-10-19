@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OTSSite2.Models;
 using OTSSite.Repositories;
 
-namespace OTSSite.Pages.Article
+namespace OTSSite.Pages.Comments
 {
     public class CommentPageModel : PageModel
     {
@@ -20,14 +21,17 @@ namespace OTSSite.Pages.Article
             _commentRepository = commentRepository;
         }
 
+        public OTSSite2.Models.Comment Comment { get; set; }
         public string Author { get; set; }
-        public string TimeStamp { get; set; }
-        public string Comment { get; set; }
         public int Children { get; set; }
 
-        public void OnGet(int articleName)
+        public IActionResult OnGet(OTSSite2.Models.Comment commentObj)
         {
-            
+            Comment = commentObj;
+            Author = _userManager.Users.FirstOrDefault(u => u.Id == commentObj.AuthorId).UserName;
+            Children = _commentRepository.GetChildComments(commentObj.Id).Count();
+
+            return Page();
         }
     }
 }
