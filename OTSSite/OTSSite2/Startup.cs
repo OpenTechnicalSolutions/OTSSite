@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using OTSSite.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OTSSite2.Repositories;
 
 namespace OTSSite2
 {
@@ -40,6 +41,9 @@ namespace OTSSite2
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddTransient(typeof(ArticleRepository));
+            services.AddTransient(typeof(CommentRepository));
+            services.AddTransient(typeof(TopicRepository));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

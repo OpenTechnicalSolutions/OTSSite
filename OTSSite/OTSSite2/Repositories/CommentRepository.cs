@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OTSSite.Repositories
+namespace OTSSite2.Repositories
 {
     public class CommentRepository : IRepository<Comment>
     {

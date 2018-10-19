@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using OTSSite.Data;
 using OTSSite2.Models;
-using OTSSite.Repositories;
+using OTSSite2.Repositories;
 using OTSSite2.VIewModel;
 
 namespace OTSSite.Pages.Articles

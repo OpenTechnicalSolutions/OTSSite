@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OTSSite2.Models;
-using OTSSite.Repositories;
+using OTSSite2.Repositories;
 
 namespace OTSSite.Pages.Comments
 {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OTSSite.Data;
 using OTSSite2.Models;
-using OTSSite.Repositories;
+using OTSSite2.Repositories;
 
 namespace OTSSite2.Pages.Comments
 {
