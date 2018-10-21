@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -69,10 +70,19 @@ namespace OTSSite2.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            Input.UserName = Input.UserName.ToLower();
+            var usersn = _userManager.Users.Select(u => u.UserName);
+            usersn.ToList().ForEach(u => u.ToLower());
+            
+            if(usersn.Contains(Input.UserName.ToLower()))
+            {
+                ModelState.AddModelError("UserNameFound", "The username you have selected already exists.");
+                return Page();
+            }
+
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+
                 var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

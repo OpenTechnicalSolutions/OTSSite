@@ -193,7 +193,7 @@ namespace OTSSite.Data.Migrations
                     b.Property<string>("ArticleText")
                         .IsRequired();
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("Author")
                         .IsRequired();
 
                     b.Property<bool>("Published");
@@ -217,7 +217,7 @@ namespace OTSSite.Data.Migrations
 
                     b.Property<int>("ArticleId");
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("Author")
                         .IsRequired();
 
                     b.Property<string>("CommentText")

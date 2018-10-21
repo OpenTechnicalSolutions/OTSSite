@@ -13,7 +13,7 @@ namespace OTSSite2.Models
         [StringLength(256)]
         public string Title { get; set; }
         [Required]
-        public string AuthorId { get; set; }
+        public string Author { get; set; }
         public DateTime TimeStamp { get; set; }
         public bool Published { get; set; }
         [Required]

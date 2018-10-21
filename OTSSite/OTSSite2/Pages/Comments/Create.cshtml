@@ -1,13 +1,16 @@
 ﻿@page
 @model OTSSite2.Pages.Comments.CreateModel
-
+@inject UserManager<IdentityUser> userManager
 @{
     ViewData["Title"] = "Create";
 }
-
+@{ 
+    var author = userManager.GetUserName(User);
+}
 <div class="row">
     <div class="col-md-4">
         <form method="post">
+            <input type="hidden" asp-for="Comment.Author" value="@author" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Comment.CommentText" class="control-label"></label>

@@ -20,7 +20,7 @@
     <Content Update="Pages\Articles\Article.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Comment\Comment.cshtml">
+    <Content Update="Pages\Comments\Comments.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Contact.cshtml">

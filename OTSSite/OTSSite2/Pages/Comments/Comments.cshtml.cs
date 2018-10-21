@@ -12,9 +12,7 @@ namespace OTSSite.Pages.Comments
 {
     public class CommentPageModel : PageModel
     {
-        private CommentRepository _commentRepository;
-        private UserManager<IdentityUser> _userManager;
-        
+        private CommentRepository _commentRepository;        
 
         public CommentPageModel(CommentRepository commentRepository)
         {
@@ -28,7 +26,6 @@ namespace OTSSite.Pages.Comments
         public IActionResult OnGet(OTSSite2.Models.Comment commentObj)
         {
             Comment = commentObj;
-            Author = _userManager.Users.FirstOrDefault(u => u.Id == commentObj.AuthorId).UserName;
             Children = _commentRepository.GetChildComments(commentObj.Id).Count();
 
             return Page();

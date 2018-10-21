@@ -17,16 +17,17 @@ namespace OTSSite2.Pages.Comments
         private readonly CommentRepository _commentRepository;
         private UserManager<IdentityUser> _userManager;
 
-        public CreateModel(CommentRepository commentRepository)
+        public CreateModel(CommentRepository commentRepository, UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
             _commentRepository = commentRepository;
         }
-
-        public IActionResult OnGet(int articleId, int replyId = -1)
+        private int _replyId;
+        public async Task<IActionResult> OnGetAsync(int articleId, int replyId = -1)
         {
             Comment.ArticleId = articleId;
-            Comment.AuthorId = _userManager.GetUserId(HttpContext.User);
-            Comment.ReplyId = replyId;
+            Comment.Author = (await _userManager.GetUserAsync(HttpContext.User)).UserName;
+            _replyId = replyId;
             return Page();
         }
 
@@ -39,6 +40,7 @@ namespace OTSSite2.Pages.Comments
             {
                 return Page();
             }
+            Comment.ReplyId = _replyId;
             Comment.TimeStamp = DateTime.Now;
             _commentRepository.Add(Comment);
 

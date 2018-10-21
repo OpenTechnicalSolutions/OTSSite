@@ -61,19 +61,19 @@ namespace OTSSite2.Repositories
             return GetAll().Where(a => a.Published == false);
         }
 
-        public IEnumerable<Article> GetByAuthorPublished(string authorId)
+        public IEnumerable<Article> GetByAuthorPublished(string author)
         {
-            return GetPublished().Where(a => a.AuthorId == authorId);
+            return GetPublished().Where(a => a.Author == author);
         }
 
-        public IEnumerable<Article> GetByAuthorUnPublished(string authorId)
+        public IEnumerable<Article> GetByAuthorUnPublished(string author)
         {
-            return GetUnPublished().Where(a => a.AuthorId == authorId);
+            return GetUnPublished().Where(a => a.Author == author);
         }
 
-        public bool Exists(int articleId)
+        public bool Exists(int article)
         {
-            return _dbContext.Articles.Any(a => a.Id == articleId);
+            return _dbContext.Articles.Any(a => a.Id == article);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace OTSSite2.Models
         public int ReplyId { get; set; }
         public DateTime TimeStamp { get; set; }
         [Required]
-        public string AuthorId { get; set; }
+        public string Author { get; set; }
         [Required]
         public string CommentText { get; set; }
         public bool Quarantined { get; set; }
