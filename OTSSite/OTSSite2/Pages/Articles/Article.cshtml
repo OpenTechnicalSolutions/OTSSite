@@ -20,7 +20,8 @@
     </article>
     <div id="comment-post">
         @{ var newcomm = new OTSSite2.Models.Comment() { ArticleId = Model.Article.Id }; }
-        <partial name="Create.cshtml" model="newcomm;" />
+        @{ var comment = new OTSSite2.Models.Comment() { ArticleId = Model.Article.Id }; }
+        <partial name="Create.cshtml" model=@comment />
     </div>
     <div id="comment-box">
     @{ 
