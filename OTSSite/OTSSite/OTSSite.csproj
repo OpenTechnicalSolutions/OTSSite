@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1.5</TargetFramework>
     <UserSecretsId>aspnet-OTSSite-A04CE644-8800-4203-B35D-CCDC8B916DCC</UserSecretsId>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>

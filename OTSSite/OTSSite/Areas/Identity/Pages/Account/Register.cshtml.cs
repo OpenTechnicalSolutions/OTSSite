@@ -47,7 +47,7 @@ namespace OTSSite2.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Username")]
-            [StringLength(50)]
+            [StringLength(28)]
             [RegularExpression("^[a-zA-Z0-9_-]*$")]
             public string UserName { get; set; }
 

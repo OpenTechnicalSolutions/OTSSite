@@ -6,15 +6,22 @@
 
 <div class="dl-horizontal">
     <div>
-        @Html.DisplayFor(model => model.Title)
+        <div>
+            @Html.DisplayFor(model => model.Title)
+        </div>
+        <div>
+            @Html.DisplayFor(model => model.Author)
+        </div>
+        <div>
+            @Html.DisplayFor(model => model.TimeStamp)
+        </div>
+        <article>
+            @Html.DisplayFor(model => model.ArticleText)
+        </article>
     </div>
     <div>
-        @Html.DisplayFor(model => model.Author)
+        <div id="commentBox">
+
+        </div>
     </div>
-    <div>
-        @Html.DisplayFor(model => model.TimeStamp)
-    </div>
-    <article>
-        @Html.DisplayFor(model => model.ArticleText)
-    </article>
 </div>

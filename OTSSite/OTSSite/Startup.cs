@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using OTSSite.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OTSSite.Repositories;
 
 namespace OTSSite
 {
@@ -34,18 +35,24 @@ namespace OTSSite
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddTransient(typeof(ArticleRepository));
+            services.AddTransient(typeof(CommentRepository));
+            services.AddTransient(typeof(TopicRepository));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -62,6 +69,10 @@ namespace OTSSite
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            //Populate Admin account
+            DefaultData.Initialize(userManager, roleManager);
+
 
             app.UseMvc(routes =>
             {

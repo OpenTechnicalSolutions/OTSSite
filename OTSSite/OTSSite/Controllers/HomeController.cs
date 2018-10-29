@@ -5,14 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OTSSite.Models;
+using OTSSite.Repositories;
 
 namespace OTSSite.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ArticleRepository _articleRepository;
+
+        public HomeController(ArticleRepository articleRepository)
+        {
+            _articleRepository = articleRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            return View(_articleRepository.GetFive());
         }
 
         public IActionResult About()
