@@ -8,8 +8,7 @@ namespace OTSSite.ViewModel
 {
     public class AddRolesViewModel
     {
-        public IdentityUser User { get; set; }
-        public List<string> AvailableRoles { get; set; }
+        public string UserId { get; set; }
         public string Role { get; set; }
     }
 }

@@ -59,8 +59,7 @@ namespace OTSSite.Controllers
 
             var arvm = new AddRolesViewModel()
             {
-                User = user,
-                AvailableRoles = roles
+                UserId = id
             };
 
             return View(arvm);
@@ -71,16 +70,16 @@ namespace OTSSite.Controllers
         {
             if (!ModelState.IsValid)
                 return View(arvm);
-
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == arvm.UserId);
             var res = new IdentityResult();
-            res = await _userManager.AddToRoleAsync(arvm.User, arvm.Role);
+            res = await _userManager.AddToRoleAsync(user, arvm.Role);
             if(!res.Succeeded)
             {
                 ModelState.AddModelError("", "Failed to add role due to unknown reason.");
                 return View(arvm);
             }
 
-            return RedirectToAction(nameof(Details), arvm.User.Id);
+            return RedirectToAction(nameof(Details), "AccountAdministration", user.Id);
         }
     }
 }
