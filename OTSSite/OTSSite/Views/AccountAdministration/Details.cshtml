@@ -8,6 +8,13 @@
         {
             <li>@r</li>
         }
-    <ul/>
+    </ul>
 </div>
+
+@if (Model.User.UserName != "Administrator")
+{
+    <a asp-action="AddRoles">
+        <div class="btn">Add Role</div>
+    </a>
+}
 

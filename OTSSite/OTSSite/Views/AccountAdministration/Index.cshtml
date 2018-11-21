@@ -3,6 +3,7 @@
 <div>
     @foreach(var advm in Model)
     {
+        <a asp-action="Details" asp-route-id="@advm.User.Id">
         <div>
             <div>@advm.User.UserName</div>
             <div>@advm.User.Email</div>
@@ -13,6 +14,7 @@
                 }
             </ul>
         </div>
+     </a>
     }
 </div>
 

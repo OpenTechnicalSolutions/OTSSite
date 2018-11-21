@@ -53,7 +53,7 @@ namespace OTSSite.Controllers
         public IActionResult AddRoles(string id)
         {
             var user = _userManager.Users.FirstOrDefault(u => u.Id == id);
-            var roles = _roleManager.Roles.ToList();
+            var roles = _roleManager.Roles.Select(rn => rn.Name).ToList();
             if (user == null)
                 return NotFound();
 
@@ -73,12 +73,14 @@ namespace OTSSite.Controllers
                 return View(arvm);
 
             var res = new IdentityResult();
-            foreach(var r in arvm.AddedRoles)
+            res = await _userManager.AddToRoleAsync(arvm.User, arvm.Role);
+            if(!res.Succeeded)
             {
-                res = await _userManager.AddToRoleAsync(arvm.User, r.Name);
+                ModelState.AddModelError("", "Failed to add role due to unknown reason.");
+                return View(arvm);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), arvm.User.Id);
         }
     }
 }
