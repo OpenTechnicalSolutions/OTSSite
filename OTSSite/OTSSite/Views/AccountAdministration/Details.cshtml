@@ -1,0 +1,13 @@
+﻿@model AccountDataViewModel
+
+<div>
+    <div>@Model.User.UserName</div>
+    <div>@Model.User.Email</div>
+    <ul>
+        @foreach(var r in Model.Roles)
+        {
+            <li>@r</li>
+        }
+    <ul/>
+</div>
+

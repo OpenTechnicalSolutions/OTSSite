@@ -55,7 +55,7 @@ namespace OTSSite
 
             var admin = userManager.Users.FirstOrDefault(u => u.UserName == _userData[0]);
             if (admin != null)
-                userManager.AddToRoleAsync(admin, _roles[0]);
+                userManager.AddToRoleAsync(admin, _roles[0]).Wait();
             else
                 throw new Exception("Admin account not found when adding to admin group.");
         }
