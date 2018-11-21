@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Article>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    @foreach(var a in Model)
+    {
+        <div>@a.Title</div>
+        <div>@a.TimeStamp</div>
+        <div>@a.Author</div>
+        <article>@a.ArticleText</article>
+    }
+</div>

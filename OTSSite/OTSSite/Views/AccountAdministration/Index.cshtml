@@ -1,0 +1,18 @@
+﻿@model List<AccountDataViewModel>
+
+<div>
+    @foreach(var advm in Model)
+    {
+        <div>
+            <div>@advm.User.UserName</div>
+            <div>@advm.User.Email</div>
+            <ul>
+                @foreach(var r in advm.Roles)
+                {
+                    <li>@r</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
