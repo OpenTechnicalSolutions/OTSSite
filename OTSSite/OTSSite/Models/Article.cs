@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace OTSSite.Models
         public DateTime TimeStamp { get; set; }
         public bool Published { get; set; }
         [Required]
-        public string ArticleText { get; set; }
+        public string ArticleFileName { get; set; }
     }
 }

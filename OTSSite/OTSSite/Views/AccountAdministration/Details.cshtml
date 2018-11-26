@@ -14,7 +14,9 @@
 @if (Model.User.UserName != "Administrator")
 {
     <a asp-action="AddRoles" asp-controller="AccountAdministration" asp-route-id="@Model.User.Id">
-        <div class="btn">Add Role</div>
+        <button type="button" class="btn">Add Role</button>
     </a>
 }
+<br />
+<a asp-action="Index">Back</a>
 

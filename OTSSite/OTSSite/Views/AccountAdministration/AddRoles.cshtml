@@ -1,10 +1,8 @@
 ﻿@model AddRolesViewModel
 
-@inject Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> _roleManager
 @inject Microsoft.AspNetCore.Identity.UserManager<Microsoft.AspNetCore.Identity.IdentityUser> _userManager
 
-@{ 
-    var roles = _roleManager.Roles.Select(rn => rn.Name).ToList();
+@{
     var user = _userManager.Users.FirstOrDefault(u => u.Id == Model.UserId);
 }
 
@@ -12,19 +10,29 @@
     <div>@user.UserName</div>
     <div>@user.Email</div>
     <form asp-action="AddRoles">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <input asp-for="UserId" type="hidden" value="@Model.UserId"/>
-            <label asp-for="Role"></label>
-            <select asp-for="Role">
-                @foreach(var r in roles)
-                {
-                    <option>@r</option>
-                }
-            </select>
+            <input asp-for="UserId" type="hidden" value="@Model.UserId" />
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Administrator" value="@true" />
+                <label class="form-check-label">Administrator</label>
+                <br />
+                <input class="form-check-input" asp-for="Moderator" value="@true" />
+                <label class="form-check-label">Moderator</label>
+                <br />
+                <input class="form-check-input" asp-for="Author" value="@true" />
+                <label class="form-check-label">Author</label>
+                <br />
+                <input class="form-check-input" asp-for="Member" value="@true" />
+                <label class="form-check-label">Member</label>
+            </div>
         </div>
         <div class="form-group">
-            <input type="submit" value="Add Role" class="btn" />
+            <input type="submit" value="Change Roles" class="btn" />
         </div>
+        <a asp-action="Details" asp-route-id="@Model.UserId">
+            <button type="button" class="btn">Cancel</button>
+        </a>
     </form>
 </div>
 
