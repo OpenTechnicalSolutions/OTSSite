@@ -4,7 +4,13 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@foreach(var a in Model.OutModels)
+{
+<div class="Jumbotron">
+    <p>@a.TopicName</p>
+    <h2 class="display-2"><a asp-page="/Article" asp-route-Id="@a.ArticleId">@a.Title</a></h2>
+    <p>@a.AuthorUserName</p>
+    <p>@a.PublishDate</p>
+    <p>@a.PreviewText</p>
 </div>
+}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Entities
 {
-    public class ApplicationIdentityUser : IdentityUser
+    public class ApplicationIdentityUser : IdentityUser<Guid>
     {
     }
 }

@@ -34,6 +34,7 @@ namespace OTSSite.Repositories
 
         public void Update(Article obj)
         {
+            System.Diagnostics.Debug.WriteLine("The database has been udpated.");
         }
 
         public bool Save()

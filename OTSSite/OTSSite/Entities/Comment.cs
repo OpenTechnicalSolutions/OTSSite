@@ -13,7 +13,7 @@ namespace OTSSite.Entities
         public Guid Id { get; set; }
         [ForeignKey("UserId")]
         [Required]
-        public Guid Author { get; set; }
+        public string Author { get; set; }
         [Required]
         public DateTime PublishDate { get; set; }
         [ForeignKey("ArticleId")]

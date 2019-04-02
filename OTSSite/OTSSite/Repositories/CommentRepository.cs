@@ -69,7 +69,7 @@ namespace OTSSite.Repositories
 
         public void Update(Comment obj)
         {
-            
+            System.Diagnostics.Debug.WriteLine("The database has been udpated.");
         }
     }
 }

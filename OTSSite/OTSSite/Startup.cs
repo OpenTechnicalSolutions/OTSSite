@@ -40,11 +40,12 @@ namespace OTSSite
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationIdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient(typeof(IRepository<Article>), typeof(ArticleRepository));
             services.AddTransient(typeof(IRepository<Comment>), typeof(CommentRepository));
+            services.AddTransient(typeof(IRepository<Topic>), typeof(TopicRepository));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
