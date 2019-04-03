@@ -57,6 +57,12 @@ namespace OTSSite.Repositories
             return _dbContext.Articles.Where(a => a.TopicId == topicId).ToList();
         }
 
+        public List<Article> GetByDate(DateTime date)
+        {
+            var dt = date.Date;
+            return _dbContext.Articles.Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1)).ToList();
+        }
+
         public List<Article> GetByArticle(Guid articleId)
         {
             throw new NotImplementedException();
@@ -65,12 +71,6 @@ namespace OTSSite.Repositories
         public List<Article> GetByParent(Guid parent)
         {
             throw new NotImplementedException();
-        }
-
-        public List<Article> GetByDate(DateTime date)
-        {
-            var dt = date.Date;
-            return _dbContext.Articles.Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1)).ToList();
         }
     }
 }

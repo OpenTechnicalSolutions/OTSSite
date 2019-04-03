@@ -36,24 +36,9 @@ namespace OTSSite.Repositories
             return _dbContext.Comments.Where(c => c.Id == articleId).OrderBy(c => c.PublishDate).ToList();
         }
 
-        public List<Comment> GetByAuthor(Guid authorId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Comment> GetByDate(DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Comment> GetByParent(Guid parent)
         {
             return _dbContext.Comments.Where(c => c.ParentCommentId == parent).ToList();
-        }
-
-        public List<Comment> GetByTopic(Guid topicId)
-        {
-            throw new NotImplementedException();
         }
 
         public Comment Read(Guid id)
@@ -70,6 +55,21 @@ namespace OTSSite.Repositories
         public void Update(Comment obj)
         {
             System.Diagnostics.Debug.WriteLine("The database has been udpated.");
+        }
+
+        public List<Comment> GetByAuthor(Guid authorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetByDate(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetByTopic(Guid topicId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -31,6 +31,21 @@ namespace OTSSite.Repositories
             return _dbContext.Topics.Select(t => t.Id).ToList();
         }
 
+        public Topic Read(Guid id)
+        {
+            return _dbContext.Topics.FirstOrDefault(t => t.Id == id);
+        }
+
+        public bool Save()
+        {
+            return _dbContext.SaveChanges() >= 0;
+        }
+
+        public void Update(Topic obj)
+        {
+            System.Diagnostics.Debug.WriteLine("The database has been udpated.");
+        }
+
         public List<Topic> GetByArticle(Guid articleId)
         {
             throw new NotImplementedException();
@@ -54,21 +69,6 @@ namespace OTSSite.Repositories
         public List<Topic> GetByTopic(Guid topicId)
         {
             throw new NotImplementedException();
-        }
-
-        public Topic Read(Guid id)
-        {
-            return _dbContext.Topics.FirstOrDefault(t => t.Id == id);
-        }
-
-        public bool Save()
-        {
-            return _dbContext.SaveChanges() >= 0;
-        }
-
-        public void Update(Topic obj)
-        {
-            System.Diagnostics.Debug.WriteLine("The database has been udpated.");
         }
     }
 }
