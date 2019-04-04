@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTSSite.Repositories;
 using OTSSite.Entities;
+using OTSSite.Models.ViewModels;
+using OTSSite.ExtensionMethod;
 
 namespace OTSSite
 {
@@ -45,13 +47,12 @@ namespace OTSSite
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient(typeof(IRepository<Article>), typeof(ArticleRepository));
             services.AddTransient(typeof(IRepository<Comment>), typeof(CommentRepository));
-            services.AddTransient(typeof(IRepository<Topic>), typeof(TopicRepository));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceCollection services)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +65,12 @@ namespace OTSSite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleViewModel>()
+                    .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

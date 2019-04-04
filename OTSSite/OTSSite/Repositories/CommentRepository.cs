@@ -67,7 +67,7 @@ namespace OTSSite.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Comment> GetByTopic(Guid topicId)
+        public List<Comment> GetByTopic(string topic)
         {
             throw new NotImplementedException();
         }

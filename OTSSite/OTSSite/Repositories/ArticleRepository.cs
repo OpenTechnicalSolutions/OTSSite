@@ -44,7 +44,7 @@ namespace OTSSite.Repositories
 
         public List<Article> GetByAuthor(Guid authorId)
         {
-            return _dbContext.Articles.Where(a => a.Author == authorId).ToList();
+            return _dbContext.Articles.Where(a => a.AuthorId == authorId).ToList();
         }
 
         public List<Guid> GetAllGuids()
@@ -52,9 +52,9 @@ namespace OTSSite.Repositories
             return _dbContext.Articles.OrderBy(a => a.PublishDate).Select(a => a.Id).ToList();
         }
 
-        public List<Article> GetByTopic(Guid topicId)
+        public List<Article> GetByTopic(string topic)
         {
-            return _dbContext.Articles.Where(a => a.TopicId == topicId).ToList();
+            return _dbContext.Articles.Where(a => a.Topic == topic).ToList();
         }
 
         public List<Article> GetByDate(DateTime date)

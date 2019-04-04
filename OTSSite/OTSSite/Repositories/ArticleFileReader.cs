@@ -10,7 +10,6 @@ namespace OTSSite.Repositories
     public class ArticleFileReader
     {
         private const int PREVIEW_LINE_LENGTH = 20;
-        private const int PAGE_LINE_LENGTH = 100;
         /// <summary>
         /// Returns preview text for the article
         /// </summary>
@@ -42,12 +41,11 @@ namespace OTSSite.Repositories
         /// </summary>
         /// <param name="path">path to file</param>
         /// <returns>string array of pages.</returns>
-        public string[] GetArticle(string path)
+        public string GetArticle(string path)
         {
             if (!File.Exists(path))
                 return null;
 
-            var pages = new List<string>();
             var stringBuilder = new StringBuilder();
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
@@ -56,14 +54,11 @@ namespace OTSSite.Repositories
                     string line;
                     while((line = sr.ReadLine()) != null)
                     {
-                        for(int i = 0;i < PAGE_LINE_LENGTH;i++)
-                            stringBuilder.Append(line);
-                        pages.Add(stringBuilder.ToString());
-                        stringBuilder = new StringBuilder();
+                        stringBuilder.Append(line);
                     }
                 }
             }
-            return pages.ToArray();
+            return stringBuilder.ToString();
         }
     }
 }

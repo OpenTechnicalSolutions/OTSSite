@@ -16,7 +16,7 @@ namespace OTSSite.Repositories
         List<Guid> GetAllGuids();
         List<T> GetByParent(Guid parent);
         List<T> GetByArticle(Guid articleId);
-        List<T> GetByTopic(Guid topicId);
+        List<T> GetByTopic(string topic);
         List<T> GetByDate(DateTime date);
     }
 }

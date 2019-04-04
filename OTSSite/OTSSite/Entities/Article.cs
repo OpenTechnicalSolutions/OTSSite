@@ -12,12 +12,12 @@ namespace OTSSite.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [ForeignKey("TopicId")]
-        public Guid TopicId { get; set; }
+        public string Topic { get; set; }
         [ForeignKey("UserId")]
         [Required]
-        public Guid Author { get; set; }
+        public Guid AuthorId { get; set; }
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime PublishDate { get; set; }
         [Required]
         [StringLength(30)]
