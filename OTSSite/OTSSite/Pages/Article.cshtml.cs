@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OTSSite.Entities;
+using OTSSite.Models.ViewModels;
 using OTSSite.Repositories;
 
 namespace OTSSite.Pages
@@ -16,7 +18,8 @@ namespace OTSSite.Pages
         private readonly UserManager<ApplicationIdentityUser> _userManager;
         private readonly IRepository<Comment> _commentRepository;
 
-        public ArticleModel(IRepository<Article> articleRepository,
+        public ArticleModel(
+            IRepository<Article> articleRepository,
             UserManager<ApplicationIdentityUser> userManager,
             IRepository<Comment> commentRepository)
         {
@@ -25,19 +28,22 @@ namespace OTSSite.Pages
             _commentRepository = commentRepository;
         }
 
-        public class OutModel
-        {
-            public string Title { get; set; }
-            public string AuthorId { get; set; }
-            public string AuthorUserName { get; set; }
-            public string Topic { get; set; }
-            public string PublishDate { get; set; }
-            public string ArticleText { get; set; }
-        }
+        public ArticleViewModel ArticleViewModel { get; set; }
+        public IEnumerable<CommentViewModel> Comments { get; set; }
 
-        public void OnGet(Guid Id)
+        public async Task<IActionResult> OnGet(Guid id)
         {
+            var articleFromEntity = _articleRepository.Read(id);
+            var articleFileReader = new ArticleFileReader();
+            if (articleFromEntity == null)
+                return NotFound();
 
+            var articleViewModel = Mapper.Map<ArticleViewModel>(articleFromEntity);
+            ArticleViewModel.ArticleText = await articleFileReader.GetArticle(articleFromEntity.ArticleFile);
+
+            var commentsFromArticle = _commentRepository.GetByArticle(id).Where(c => c.ParentCommentId == null);
+            Comments = Mapper.Map<IEnumerable<CommentViewModel>>(commentsFromArticle);
+            return Page();
         }
     }
 }

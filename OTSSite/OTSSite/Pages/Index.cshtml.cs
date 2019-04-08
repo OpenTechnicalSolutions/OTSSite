@@ -18,7 +18,8 @@ namespace OTSSite.Pages
         private readonly IRepository<Article> _articleRepository;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
 
-        public IndexModel(IRepository<Article> articleRepository,
+        public IndexModel(
+            IRepository<Article> articleRepository,
             UserManager<ApplicationIdentityUser> userManager)
         {
             _articleRepository = articleRepository;

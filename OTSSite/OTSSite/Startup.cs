@@ -70,6 +70,8 @@ namespace OTSSite
             {
                 cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleViewModel>()
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
+                    .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
             });
 
             app.UseHttpsRedirection();
