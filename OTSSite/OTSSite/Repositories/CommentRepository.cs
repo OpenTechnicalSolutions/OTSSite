@@ -1,96 +1,75 @@
 ﻿using OTSSite.Data;
-using OTSSite.Models;
+using OTSSite.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OTSSite.Repositories
 {
     public class CommentRepository : IRepository<Comment>
     {
-        public ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
         public CommentRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        /// <summary>
-        /// Add a comment
-        /// </summary>
-        /// <param name="item">Comment object</param>
-        public void Add(Comment item)
-        {
-            _dbContext.Comments.Add(item);
-            _dbContext.SaveChanges();
-        }
-        /// <summary>
-        /// Delete comment
-        /// </summary>
-        /// <param name="id">Comment Id</param>
-        public void Delete(int id)
-        {
-            Delete(_dbContext.Comments.FirstOrDefault(c => c.Id == id));
 
-        }/// <summary>
-        /// Delete comment
-        /// </summary>
-        /// <param name="item">Comment object</param>
-        public void Delete(Comment item)
+        public void Create(Comment obj)
         {
-            _dbContext.Comments.Remove(item);
-            _dbContext.SaveChanges();
+            _dbContext.Comments.Add(obj as Comment);
         }
-        /// <summary>
-        /// Get all comments
-        /// </summary>
-        /// <returns>Comments</returns>
-        public IEnumerable<Comment> GetAll()
+
+        public void Delete(Comment obj)
         {
-            return _dbContext.Comments;
+            _dbContext.Comments.Remove(obj as Comment);
         }
-        /// <summary>
-        /// Get Comment by Id
-        /// </summary>
-        /// <param name="id"Comment Id></param>
-        /// <returns>A Comment</returns>
-        public Comment GetById(int id)
+
+        public List<Guid> GetAllGuids()
         {
-            return GetAll().FirstOrDefault(c => c.Id == id);
+            return _dbContext.Comments.OrderBy(c => c.PublishDate).Select(c => c.Id).ToList();
         }
-        /// <summary>
-        /// Update an existing Comment
-        /// </summary>
-        /// <param name="item">Comment object</param>
-        public void Update(Comment item)
+
+        public List<Comment> GetByArticle(Guid articleId)
         {
-            _dbContext.Comments.Update(item);
-            _dbContext.SaveChanges();
+            return _dbContext.Comments.Where(c => c.Id == articleId).OrderBy(c => c.PublishDate).ToList();
         }
-        /// <summary>
-        /// Get Article Replies
-        /// </summary>
-        /// <param name="articleId">Article Id</param>
-        /// <returns>Comments</returns>
-        public IEnumerable<Comment> GetByArticleId(int articleId)
+
+        public List<Comment> GetByParent(Guid parent)
         {
-            return GetAll().Where(c => c.ArticleId == articleId);
+            return _dbContext.Comments.Where(c => c.ParentCommentId == parent).ToList();
         }
-        /// <summary>
-        /// Get top level Replies
-        /// </summary>
-        /// <param name="articleId"Article Id></param>
-        /// <returns>Comments</returns>
-        public IEnumerable<Comment> GetTopLevel(int articleId)
+
+        public Comment Read(Guid id)
         {
-            return GetByArticleId(articleId).Where(c => c.ReplyId == 0);
+            dynamic comment = _dbContext.Comments.Where(c => c.Id == id);
+            return comment;
         }
-        /// <summary>
-        /// Get Comment replies
-        /// </summary>
-        /// <param name="replyId">Comment Id</param>
-        /// <returns>Comments</returns>
-        public IEnumerable<Comment> GetChildComments(int replyId)
+
+        public bool Save()
         {
-            return GetAll().Where(c => c.ReplyId == replyId);
+            return _dbContext.SaveChanges() >= 0;
+        }
+
+        public void Update(Comment obj)
+        {
+            System.Diagnostics.Debug.WriteLine("The database has been udpated.");
+        }
+
+        public List<Comment> GetByAuthor(Guid authorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetByDate(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Comment> GetByTopic(string topic)
+        {
+            throw new NotImplementedException();
         }
     }
 }

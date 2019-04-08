@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +14,9 @@ using OTSSite.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTSSite.Repositories;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using OTSSite.Entities;
+using OTSSite.Models.ViewModels;
+using OTSSite.ExtensionMethod;
 
 namespace OTSSite
 {
@@ -36,28 +39,20 @@ namespace OTSSite
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient(typeof(ArticleRepository));
-            services.AddTransient(typeof(CommentRepository));
-            services.AddTransient(typeof(TopicRepository));
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddDefaultIdentity<ApplicationIdentityUser>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient<IRepository<Article>, ArticleRepository>();
+            services.AddTransient<IRepository<Comment>, CommentRepository>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options =>
-            {
-                options.AllowAreas = true;
-                options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-            });
-
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -66,9 +61,18 @@ namespace OTSSite
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleViewModel>()
+                    .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
+                    .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -76,16 +80,7 @@ namespace OTSSite
 
             app.UseAuthentication();
 
-            //Populate Admin account
-            DefaultData.Initialize(userManager, roleManager);
-
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

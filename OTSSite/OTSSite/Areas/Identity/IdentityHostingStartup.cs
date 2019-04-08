@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTSSite.Data;
 
-[assembly: HostingStartup(typeof(OTSSite2.Areas.Identity.IdentityHostingStartup))]
-namespace OTSSite2.Areas.Identity
+[assembly: HostingStartup(typeof(OTSSite.Areas.Identity.IdentityHostingStartup))]
+namespace OTSSite.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
