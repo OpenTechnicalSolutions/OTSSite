@@ -332,3 +332,5 @@ ASALocalRun/
 /OTSSite/OTSSite2/Data/Migrations/20181020222211_changedAuthorIdToAuthor.Designer.cs
 /OTSSite/OTSSite2/Data/Migrations/20181021215612_changedcommentauthortoauthorid.cs
 /OTSSite/OTSSite2/Data/Migrations/20181021215612_changedcommentauthortoauthorid.Designer.cs
+/OTSSite/OTSSite/Data/Migrations/20190408024209_initial.cs
+/OTSSite/OTSSite/Data/Migrations/20190408024209_initial.Designer.cs

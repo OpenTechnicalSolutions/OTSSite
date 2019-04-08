@@ -4,13 +4,13 @@
     ViewData["Title"] = "Home page";
 }
 
-@foreach(var a in Model.OutModels)
+@foreach(var a in Model.ArticleViewModels)
 {
 <div class="Jumbotron">
     <p>@a.Topic</p>
     <h2 class="display-2"><a asp-page="/Article" asp-route-Id="@a.ArticleId">@a.Title</a></h2>
     <p>@a.AuthorUserName</p>
     <p>@a.PublishDate</p>
-    <p>@a.PreviewText</p>
+    <p>@a.ArticleText</p>
 </div>
 }

@@ -11,7 +11,7 @@ namespace OTSSite.ExtensionMethod
     {
         public static string GetUserName(this Guid guid, UserManager<ApplicationIdentityUser> userManager)
         {
-            return userManager.Users.FirstOrDefault(u => u.Id == guid).UserName;
+            return userManager.Users.FirstOrDefault(u => u.Id == guid.ToString()).UserName;
         }
     }
 }
