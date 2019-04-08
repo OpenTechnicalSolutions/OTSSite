@@ -23,6 +23,6 @@ namespace OTSSite.Entities
         [StringLength(30)]
         public string Title { get; set; }
         [Required]
-        public string ArticleFiles { get; set; }
+        public string ArticleFile { get; set; }
     }
 }

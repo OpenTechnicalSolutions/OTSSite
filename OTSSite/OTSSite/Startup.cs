@@ -45,14 +45,14 @@ namespace OTSSite
             services.AddDefaultIdentity<ApplicationIdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddTransient(typeof(IRepository<Article>), typeof(ArticleRepository));
-            services.AddTransient(typeof(IRepository<Comment>), typeof(CommentRepository));
+            services.AddTransient<IRepository<Article>, ArticleRepository>();
+            services.AddTransient<IRepository<Comment>, CommentRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceCollection services)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

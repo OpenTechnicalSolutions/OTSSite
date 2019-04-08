@@ -27,16 +27,20 @@ namespace OTSSite.Pages
 
         public List<ArticleViewModel> ArticleViewModels { get; set; }
 
-        public void OnGet()
+        public async void OnGet()
         {
             var articles = _articleRepository.GetByDate(DateTime.Now).ToList();
-            var articleViewModels = Mapper.Map<IEnumerable<ArticleViewModel>>(articles);
-            var articleFileReader = new ArticleFileReader();
+            ArticleViewModels = new List<ArticleViewModel>();
+            var articleReader = new ArticleFileReader();
+            if (articles.Count == 0)
+                return;
 
-            ArticleViewModels.ForEach(a => {
-                a.AuthorUserName = a.AuthorId.GetUserName(_userManager);
-                a.ArticleText = articleFileReader.GetArticle(articles.FirstOrDefault(artf => artf.Id == a.ArticleId).ArticleFiles);
-            });
+            ArticleViewModels = Mapper.Map<IEnumerable<ArticleViewModel>>(articles).ToList();
+            foreach(var a in ArticleViewModels)
+            {
+                var path = articles.FirstOrDefault(art => art.Id == a.ArticleId).ArticleFile;
+                a.ArticleText = await articleReader.GetArticle(path);
+            }
         }
     }
 }
