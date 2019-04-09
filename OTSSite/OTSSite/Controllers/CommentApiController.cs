@@ -19,7 +19,12 @@ namespace OTSSite.Controllers
         public CommentApiController(IRepository<Comment> commentRepository)
         {
             _commentRepository = commentRepository;
-        }        
+        }   
+        /// <summary>
+        /// Get a comment
+        /// </summary>
+        /// <param name="id">Comment Id</param>
+        /// <returns>A comment</returns>
         [HttpGet("{id}", Name = "GetComment")]
         public IActionResult GetComment(Guid id)
         {
@@ -29,8 +34,12 @@ namespace OTSSite.Controllers
             var commentViewModel = Mapper.Map<Comment>(commentFromEntity);
             return Ok(commentViewModel);
         }
-
-        [HttpPost("{articleId}")]
+        /// <summary>
+        /// Create a comment
+        /// </summary>
+        /// <param name="comment">DTO for Comment Creation</param>
+        /// <returns>Result of creation</returns>
+        [HttpPost]
         public IActionResult CreateComment([FromBody] CreateCommentDto comment)
         {
             var commentEntity = Mapper.Map<Comment>(comment);

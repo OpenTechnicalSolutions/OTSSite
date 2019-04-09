@@ -20,7 +20,11 @@ namespace OTSSite.Controllers
         {
             _commentRepository = commentRepository;
         }
-
+        /// <summary>
+        /// Gets all top level comments by Article
+        /// </summary>
+        /// <param name="id">Article Key</param>
+        /// <returns>All top level comments</returns>
         [HttpGet("{id}")]
         public IActionResult GetComments(Guid id)
         {
@@ -31,7 +35,11 @@ namespace OTSSite.Controllers
             commentsViewModel.ForEach(c => c.ChildCount = _commentRepository.GetByParent(c.CommentId).Count);
             return Ok(commentsViewModel);
         }
-
+        /// <summary>
+        /// Gets all child comments
+        /// </summary>
+        /// <param name="parentId">Parent comment key</param>
+        /// <returns>All child comments</returns>
         [HttpGet("children/{parentId}")]
         public IActionResult GetChildComments(Guid parentId)
         {

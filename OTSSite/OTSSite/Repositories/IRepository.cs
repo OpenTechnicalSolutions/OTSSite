@@ -12,7 +12,7 @@ namespace OTSSite.Repositories
         void Update(T obj);
         void Delete(T obj);
         bool Save();
-        List<T> GetByAuthor(Guid authorId);
+        List<T> GetByAuthor(string authorId);
         List<Guid> GetAllGuids();
         List<T> GetByParent(Guid parent);
         List<T> GetByArticle(Guid articleId);

@@ -57,19 +57,19 @@ namespace OTSSite.Repositories
             System.Diagnostics.Debug.WriteLine("The database has been udpated.");
         }
 
-        public List<Comment> GetByAuthor(Guid authorId)
+        public List<Comment> GetByAuthor(string authorId)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("GetByAuthor may only be used by an ArticleRepository.");
         }
 
         public List<Comment> GetByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("GetByDate may only be used by an ArticleRepository.");
         }
 
         public List<Comment> GetByTopic(string topic)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("GetByTopic may only be used by an ArticleRepository.");
         }
     }
 }

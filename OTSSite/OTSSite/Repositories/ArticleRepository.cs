@@ -42,7 +42,7 @@ namespace OTSSite.Repositories
             return _dbContext.SaveChanges() >= 0;
         }
 
-        public List<Article> GetByAuthor(Guid authorId)
+        public List<Article> GetByAuthor(string authorId)
         {
             return _dbContext.Articles.Where(a => a.AuthorId == authorId).ToList();
         }
@@ -65,12 +65,12 @@ namespace OTSSite.Repositories
 
         public List<Article> GetByArticle(Guid articleId)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("GetByArticle may only be used by a CommentRepository.");
         }
 
         public List<Article> GetByParent(Guid parent)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("GetByParent  may only be used by a CommentRepository.");
         }
     }
 }
