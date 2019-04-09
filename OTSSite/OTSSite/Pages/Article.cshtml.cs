@@ -39,10 +39,8 @@ namespace OTSSite.Pages
                 return NotFound();
 
             var articleViewModel = Mapper.Map<ArticleViewModel>(articleFromEntity);
+            ArticleViewModel.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == ArticleViewModel.AuthorId).UserName;
             ArticleViewModel.ArticleText = await articleFileReader.GetArticle(articleFromEntity.ArticleFile);
-
-            var commentsFromArticle = _commentRepository.GetByArticle(id).Where(c => c.ParentCommentId == null);
-            TopLevelComments = Mapper.Map<IEnumerable<CommentViewModel>>(commentsFromArticle);
             return Page();
         }
     }

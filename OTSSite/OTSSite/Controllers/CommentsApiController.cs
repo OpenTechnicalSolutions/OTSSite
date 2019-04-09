@@ -32,7 +32,7 @@ namespace OTSSite.Controllers
             return Ok(commentsViewModel);
         }
 
-        [HttpGet("child/{parentId}")]
+        [HttpGet("children/{parentId}")]
         public IActionResult GetChildComments(Guid parentId)
         {
             var commentsFromEntity = _commentRepository.GetByParent(parentId);
