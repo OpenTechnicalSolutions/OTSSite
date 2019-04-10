@@ -29,7 +29,7 @@ namespace OTSSite.Pages
         }
 
         public ArticleViewModel ArticleViewModel { get; set; }
-        public IEnumerable<CommentViewModel> Comments { get; set; }
+        public IEnumerable<CommentViewModel> TopLevelComments { get; set; }
 
         public async Task<IActionResult> OnGet(Guid id)
         {
@@ -39,10 +39,8 @@ namespace OTSSite.Pages
                 return NotFound();
 
             var articleViewModel = Mapper.Map<ArticleViewModel>(articleFromEntity);
+            ArticleViewModel.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == ArticleViewModel.AuthorId).UserName;
             ArticleViewModel.ArticleText = await articleFileReader.GetArticle(articleFromEntity.ArticleFile);
-
-            var commentsFromArticle = _commentRepository.GetByArticle(id).Where(c => c.ParentCommentId == null);
-            Comments = Mapper.Map<IEnumerable<CommentViewModel>>(commentsFromArticle);
             return Page();
         }
     }

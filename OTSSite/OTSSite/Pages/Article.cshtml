@@ -4,5 +4,10 @@
     ViewData["Title"] = "Article";
 }
 
-
-
+<div class="Article">
+    <div class="Topic">@Model.ArticleViewModel.Topic</div>
+    <h2 class="Title">@Model.ArticleViewModel.Title</h2>
+    <div class="ArticleAuthor">@Model.ArticleViewModel.AuthorUserName</div>
+    <div class="ArticleDate">@Model.ArticleViewModel.PublishDate</div>
+    <div class="ArticleContent">@Model.ArticleViewModel.ArticleText</div>
+</div>

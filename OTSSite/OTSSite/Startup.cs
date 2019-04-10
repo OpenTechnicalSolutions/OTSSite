@@ -72,6 +72,8 @@ namespace OTSSite
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
                     .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Models.CreateCommentDto, Entities.Comment>()
+                    .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));
             });
 
             app.UseHttpsRedirection();

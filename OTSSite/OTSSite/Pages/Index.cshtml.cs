@@ -39,6 +39,7 @@ namespace OTSSite.Pages
             ArticleViewModels = Mapper.Map<IEnumerable<ArticleViewModel>>(articles).ToList();
             foreach(var a in ArticleViewModels)
             {
+                a.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == a.AuthorId).UserName;
                 var path = articles.FirstOrDefault(art => art.Id == a.ArticleId).ArticleFile;
                 a.ArticleText = await articleReader.GetArticle(path);
             }

@@ -10,7 +10,6 @@ namespace OTSSite.Repositories
 {
     public class ArticleFileReader
     {
-        private const int PREVIEW_LINE_LENGTH = 20;
         /// <summary>
         /// Return an article
         /// </summary>
@@ -39,7 +38,7 @@ namespace OTSSite.Repositories
         /// <returns>path to file</returns>
         public async Task<string> SaveArticle(IFormFile articleFormFile, List<IFormFile> imageFormFiles, string username)
         {
-            var path = string.Format($"./{0}/{new Guid()}", username);
+            var path = string.Format($"./{username}/{new Guid()}");
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 await articleFormFile.CopyToAsync(fs);

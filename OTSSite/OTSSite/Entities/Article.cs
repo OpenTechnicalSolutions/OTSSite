@@ -15,7 +15,7 @@ namespace OTSSite.Entities
         public string Topic { get; set; }
         [ForeignKey("UserId")]
         [Required]
-        public Guid AuthorId { get; set; }
+        public string AuthorId { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime PublishDate { get; set; }

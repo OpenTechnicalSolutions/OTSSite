@@ -11,7 +11,7 @@ namespace OTSSite.Models.ViewModels
         public string Topic { get; set; }
         public string Title { get; set; }
         public string AuthorUserName { get; set; }
-        public Guid AuthorId { get; set; }
+        public string AuthorId { get; set; }
         public DateTime PublishDate { get; set; }
         public string ArticleText { get; set; }
     }
