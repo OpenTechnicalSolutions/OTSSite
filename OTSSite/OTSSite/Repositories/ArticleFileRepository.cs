@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Repositories
 {
-    public class ArticleFileReader
+    public class ArticleFileRepository
     {
         /// <summary>
         /// Return an article
@@ -48,6 +48,7 @@ namespace OTSSite.Repositories
                 foreach (var formFile in imageFormFiles)
                     await formFile.CopyToAsync(fs);
             }
+            path += articleFormFile.FileName;
             return path;
         }
     }
