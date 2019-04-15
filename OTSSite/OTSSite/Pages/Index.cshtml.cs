@@ -32,7 +32,7 @@ namespace OTSSite.Pages
         {
             var articles = _articleRepository.GetByDate(DateTime.Now).ToList();
             ArticleViewModels = new List<ArticleViewModel>();
-            var articleReader = new ArticleFileReader();
+            var articleReader = new ArticleFileRepository();
             if (articles.Count == 0)
                 return;
 

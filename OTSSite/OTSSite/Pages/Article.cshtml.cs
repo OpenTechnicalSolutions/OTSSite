@@ -34,7 +34,7 @@ namespace OTSSite.Pages
         public async Task<IActionResult> OnGet(Guid id)
         {
             var articleFromEntity = _articleRepository.Read(id);
-            var articleFileReader = new ArticleFileReader();
+            var articleFileReader = new ArticleFileRepository();
             if (articleFromEntity == null)
                 return NotFound();
 

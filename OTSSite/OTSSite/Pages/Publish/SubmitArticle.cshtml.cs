@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OTSSite.Entities;
+using OTSSite.Models;
 using OTSSite.Repositories;
 
 namespace OTSSite.Pages.Publish
@@ -33,18 +35,19 @@ namespace OTSSite.Pages.Publish
 
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync([FromForm] CreateArticleDto articleDto)
         {
-            var articleFile = Request.Form["Article"];
-            var images = Request.Form["Images"];
-            var userName = _userManager.GetUserName(User);
-
-            var article = new Article();
-            article.AuthorId = _userManager.GetUserId(User);
-            article.PublishDate = DateTime.Now;
-            article.Title = Request.Form["Title"];
-            article.Topic = Request.Form["Topic"];
-            article.Path = 
+            if (!ModelState.IsValid)
+                return Page();
+            var username = _userManager.GetUserName(User);
+            var path = await _articleFileRepository.SaveArticle(articleDto.Article, articleDto.Images, username);
+            var articleEntity = Mapper.Map<Article>(articleDto);
+            articleEntity.AuthorId = _userManager.GetUserId(User);
+            articleEntity.ArticleFile = path;
+            _articleRepository.Create(articleEntity);
+            if (_articleRepository.Save())
+                throw new Exception("Failed to create article database entry.");
+            return RedirectToRoute($"/Article?id={articleEntity.Id}");
         }
     }
 }

@@ -36,13 +36,15 @@ namespace OTSSite.Repositories
         /// <param name="formFile">article IFormFile</param>
         /// <param name="username">article author username</param>
         /// <returns>path to file</returns>
-        public async Task<string> SaveArticle(IFormFile articleFormFile, List<IFormFile> imageFormFiles, string username)
+        public async Task<string> SaveArticle(IFormFile articleFormFile, IEnumerable<IFormFile> imageFormFiles, string username)
         {
             var path = string.Format($"./{username}/{new Guid()}");
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 await articleFormFile.CopyToAsync(fs);
             }
+            if (imageFormFiles == null)
+                return path;
             using (FileStream fs = new FileStream(path + "/images", FileMode.Create, FileAccess.Write))
             {
                 foreach (var formFile in imageFormFiles)
