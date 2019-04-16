@@ -42,33 +42,38 @@ namespace OTSSite.Repositories
             return _dbContext.SaveChanges() >= 0;
         }
 
-        public List<Article> GetByAuthor(string authorId)
+        public IEnumerable<Article> GetByAuthor(string authorId)
         {
-            return _dbContext.Articles.Where(a => a.AuthorId == authorId).ToList();
+            return _dbContext.Articles.Where(a => a.AuthorId == authorId);
         }
 
-        public List<Guid> GetAllGuids()
+        public IEnumerable<Guid> GetAllGuids()
         {
-            return _dbContext.Articles.OrderBy(a => a.PublishDate).Select(a => a.Id).ToList();
+            return _dbContext.Articles.OrderBy(a => a.PublishDate).Select(a => a.Id);
         }
 
-        public List<Article> GetByTopic(string topic)
+        public IEnumerable<Article> GetByTopic(string topic)
         {
-            return _dbContext.Articles.Where(a => a.Topic == topic).ToList();
+            return _dbContext.Articles.Where(a => a.Topic == topic);
         }
 
-        public List<Article> GetByDate(DateTime date)
+        public IEnumerable<Article> GetByDate(DateTime date)
         {
             var dt = date.Date;
-            return _dbContext.Articles.Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1)).ToList();
+            return _dbContext.Articles.Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1));
         }
 
-        public List<Article> GetByArticle(Guid articleId)
+        public IEnumerable<Article> GetAll()
+        {
+            return _dbContext.Articles.ToList();
+        }
+
+        public IEnumerable<Article> GetByArticle(Guid articleId)
         {
             throw new NotImplementedException("GetByArticle may only be used by a CommentRepository.");
         }
 
-        public List<Article> GetByParent(Guid parent)
+        public IEnumerable<Article> GetByParent(Guid parent)
         {
             throw new NotImplementedException("GetByParent  may only be used by a CommentRepository.");
         }

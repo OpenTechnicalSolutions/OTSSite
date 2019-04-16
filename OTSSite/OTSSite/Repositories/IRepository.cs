@@ -12,11 +12,12 @@ namespace OTSSite.Repositories
         void Update(T obj);
         void Delete(T obj);
         bool Save();
-        List<T> GetByAuthor(string authorId);
-        List<Guid> GetAllGuids();
-        List<T> GetByParent(Guid parent);
-        List<T> GetByArticle(Guid articleId);
-        List<T> GetByTopic(string topic);
-        List<T> GetByDate(DateTime date);
+        IEnumerable<T> GetByAuthor(string authorId);
+        IEnumerable<Guid> GetAllGuids();
+        IEnumerable<T> GetByParent(Guid parent);
+        IEnumerable<T> GetByArticle(Guid articleId);
+        IEnumerable<T> GetByTopic(string topic);
+        IEnumerable<T> GetByDate(DateTime date);
+        IEnumerable<T> GetAll();
     }
 }

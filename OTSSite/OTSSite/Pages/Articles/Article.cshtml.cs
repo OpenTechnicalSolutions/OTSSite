@@ -10,7 +10,7 @@ using OTSSite.Entities;
 using OTSSite.Models.ViewModels;
 using OTSSite.Repositories;
 
-namespace OTSSite.Pages
+namespace OTSSite.Pages.Articles
 {
     public class ArticleModel : PageModel
     {

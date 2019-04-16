@@ -26,19 +26,19 @@ namespace OTSSite.Repositories
             _dbContext.Comments.Remove(obj as Comment);
         }
 
-        public List<Guid> GetAllGuids()
+        public IEnumerable<Guid> GetAllGuids()
         {
-            return _dbContext.Comments.OrderBy(c => c.PublishDate).Select(c => c.Id).ToList();
+            return _dbContext.Comments.OrderBy(c => c.PublishDate).Select(c => c.Id);
         }
 
-        public List<Comment> GetByArticle(Guid articleId)
+        public IEnumerable<Comment> GetByArticle(Guid articleId)
         {
-            return _dbContext.Comments.Where(c => c.Id == articleId).OrderBy(c => c.PublishDate).ToList();
+            return _dbContext.Comments.Where(c => c.Id == articleId).OrderBy(c => c.PublishDate);
         }
 
-        public List<Comment> GetByParent(Guid parent)
+        public IEnumerable<Comment> GetByParent(Guid parent)
         {
-            return _dbContext.Comments.Where(c => c.ParentCommentId == parent).ToList();
+            return _dbContext.Comments.Where(c => c.ParentCommentId == parent);
         }
 
         public Comment Read(Guid id)
@@ -57,19 +57,24 @@ namespace OTSSite.Repositories
             System.Diagnostics.Debug.WriteLine("The database has been udpated.");
         }
 
-        public List<Comment> GetByAuthor(string authorId)
+        public IEnumerable<Comment> GetByAuthor(string authorId)
         {
             throw new NotImplementedException("GetByAuthor may only be used by an ArticleRepository.");
         }
 
-        public List<Comment> GetByDate(DateTime date)
+        public IEnumerable<Comment> GetByDate(DateTime date)
         {
             throw new NotImplementedException("GetByDate may only be used by an ArticleRepository.");
         }
 
-        public List<Comment> GetByTopic(string topic)
+        public IEnumerable<Comment> GetByTopic(string topic)
         {
             throw new NotImplementedException("GetByTopic may only be used by an ArticleRepository.");
+        }
+
+        public IEnumerable<Comment> GetAll()
+        {
+            throw new NotImplementedException("GetAll may only be used by an ArticleRepository.");
         }
     }
 }

@@ -1,0 +1,14 @@
+﻿@page
+@model OTSSite.Pages.Articles.TopicsModel
+@{
+    ViewData["Title"] = "Topics";
+}
+
+<h1>Topics</h1>
+@foreach(var t in Model.Topics)
+{
+    <div class="topic-container">
+        <p><a asp-page="/Articles/ByTopic" asp-route-topic="@t">@t</a></p>
+    </div>
+}
+

@@ -32,7 +32,7 @@ namespace OTSSite.Controllers
             if (commentsFromEntity == null)
                 return NotFound();
             var commentsViewModel = Mapper.Map<List<CommentViewModel>>(commentsFromEntity);
-            commentsViewModel.ForEach(c => c.ChildCount = _commentRepository.GetByParent(c.CommentId).Count);
+            commentsViewModel.ForEach(c => c.ChildCount = _commentRepository.GetByParent(c.CommentId).ToList().Count);
             return Ok(commentsViewModel);
         }
         /// <summary>
@@ -47,7 +47,7 @@ namespace OTSSite.Controllers
             if (commentsFromEntity == null)
                 return NotFound();
             var commentsViewModel = Mapper.Map<List<CommentViewModel>>(commentsFromEntity);
-            commentsViewModel.ForEach(c => c.ChildCount = _commentRepository.GetByParent(c.CommentId).Count);
+            commentsViewModel.ForEach(c => c.ChildCount = _commentRepository.GetByParent(c.CommentId).ToList().Count);
             return Ok(commentsViewModel);
         }
     }
