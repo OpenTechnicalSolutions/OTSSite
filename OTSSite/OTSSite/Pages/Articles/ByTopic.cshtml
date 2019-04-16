@@ -1,10 +1,11 @@
 ﻿@page
-@model IndexModel
+@model OTSSite.Pages.Articles.ByTopicModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "ByTopic";
 }
 
-@foreach(var a in Model.ArticleViewModels)
+<h1>@Model.Topic</h1>
+@foreach (var a in Model.Articles)
 {
     <div class="Article">
         <div class="Topic">@a.Topic</div>
@@ -14,3 +15,4 @@
         <div class="ArticleContent">@a.ArticleText</div>
     </div>
 }
+

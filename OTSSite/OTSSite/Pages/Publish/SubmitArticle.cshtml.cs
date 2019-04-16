@@ -47,7 +47,7 @@ namespace OTSSite.Pages.Publish
             _articleRepository.Create(articleEntity);
             if (!_articleRepository.Save())
                 throw new Exception("Failed to create article database entry.");
-            return RedirectToPage("../Article", new { id = articleEntity.Id });
+            return RedirectToPage("../Articles/Article", new { id = articleEntity.Id });
         }
     }
 }
