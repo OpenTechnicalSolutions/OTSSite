@@ -8,6 +8,5 @@ namespace OTSSite.Configurations
     public class FileWriteOptions
     {
         public string ArticlePath { get; set; }
-        public string MediaPath { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace OTSSite.Repositories
 
         public Article Read(Guid id)
         {
-            dynamic article = _dbContext.Articles.FirstOrDefault(a => a.Id == id);
+            var article = _dbContext.Articles.FirstOrDefault(a => a.Id == id);
             return article;
         }
 

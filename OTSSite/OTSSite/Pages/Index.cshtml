@@ -8,7 +8,7 @@
 {
     <div class="Article">
         <div class="Topic">@a.Topic</div>
-        <h2 class="Title">@a.Title</h2>
+        <h2 class="Title"><a asp-page="/Article" asp-route-id="@a.ArticleId">@a.Title</a></h2>
         <div class="ArticleAuthor">@a.AuthorUserName</div>
         <div class="ArticleDate">@a.PublishDate</div>
         <div class="ArticleContent">@a.ArticleText</div>

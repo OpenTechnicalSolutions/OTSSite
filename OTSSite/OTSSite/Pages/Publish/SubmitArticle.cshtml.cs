@@ -45,9 +45,9 @@ namespace OTSSite.Pages.Publish
             articleEntity.AuthorId = _userManager.GetUserId(User);
             articleEntity.ArticleFile = path;
             _articleRepository.Create(articleEntity);
-            if (_articleRepository.Save())
+            if (!_articleRepository.Save())
                 throw new Exception("Failed to create article database entry.");
-            return RedirectToRoute($"/Article?id={articleEntity.Id}");
+            return RedirectToPage("../Article", new { id = articleEntity.Id });
         }
     }
 }
