@@ -17,14 +17,18 @@ using OTSSite.Repositories;
 using OTSSite.Entities;
 using OTSSite.Models.ViewModels;
 using OTSSite.ExtensionMethod;
+using OTSSite.Configurations;
 
 namespace OTSSite
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -47,6 +51,10 @@ namespace OTSSite
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient<IRepository<Article>, ArticleRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
+            services.AddScoped(typeof(ArticleFileRepository));
+
+            services.AddOptions();
+            services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -73,6 +81,8 @@ namespace OTSSite
                 cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
                     .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Models.CreateCommentDto, Entities.Comment>()
+                    .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));
+                cfg.CreateMap<Models.CreateArticleDto, Entities.Article>()
                     .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));
             });
 

@@ -24,5 +24,6 @@ namespace OTSSite.Entities
         public string Title { get; set; }
         [Required]
         public string ArticleFile { get; set; }
+        public string ArticleGraphicsPath { get; set; }
     }
 }
