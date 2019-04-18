@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OTSSite.Repositories;
 using OTSSite.Entities;
 using OTSSite.Models.ViewModels;
-using OTSSite.ExtensionMethod;
+using OTSSite.ExtensionMethods;
 using OTSSite.Configurations;
 
 namespace OTSSite

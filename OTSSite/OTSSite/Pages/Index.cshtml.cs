@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OTSSite.Entities;
-using OTSSite.ExtensionMethod;
+using OTSSite.ExtensionMethods;
 using OTSSite.Models.ViewModels;
 using OTSSite.Repositories;
 

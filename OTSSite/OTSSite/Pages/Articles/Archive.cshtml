@@ -1,0 +1,45 @@
+﻿@page
+@model OTSSite.Pages.Articles.ArchiveModel
+@using OTSSite.ExtensionMethods
+@{ 
+    ViewData["Title"] = "Archive";
+    int LastIteratedYear = 0;
+    int LastIteratedMonth = 0;
+    bool YearChange = false;
+    bool MonthChange = false;
+}
+
+<h1>Archive</h1>
+
+@foreach (var d in Model.Dates)
+{
+    if (d.Year != LastIteratedYear)
+    {
+        YearChange = true;
+    }
+    if (d.Month != LastIteratedMonth)
+    {
+        MonthChange = true;
+    }
+    if(YearChange || MonthChange)
+    {
+        <div class="date-header">
+        @if (YearChange)
+        {
+            <h3>@d.Year</h3>
+        }
+        @if (MonthChange)
+        {
+            <h4>@d.Month</h4>
+        }
+        </div>
+    }
+
+    LastIteratedYear = d.Year;
+    LastIteratedMonth = d.Month;
+    <div class="archive-link">
+        <a asp-page="/Articles/ByDate" asp-route-date="@d.Date">@d.Date.ApproxDate()</a>
+    </div>
+}
+
+
