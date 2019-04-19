@@ -28,7 +28,7 @@ namespace OTSSite
                     var userManager = services.GetRequiredService<UserManager<ApplicationIdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var defSeeder = new DefaultAccountSeeds(userManager, roleManager);
-                    _ = defSeeder.Seed();
+                    defSeeder.Seed();
                 }
                 catch (Exception e)
                 {

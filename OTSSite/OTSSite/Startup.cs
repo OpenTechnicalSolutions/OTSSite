@@ -46,7 +46,7 @@ namespace OTSSite
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationIdentityUser>()
+            services.AddIdentity<ApplicationIdentityUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient<IRepository<Article>, ArticleRepository>();
