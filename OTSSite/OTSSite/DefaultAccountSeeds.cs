@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OTSSite
 {
-    public class DefaultAccountSeeds
+    public static class DefaultAccountSeeds
     {
         private const string DEFAULT_ACCOUNT_NAME = "Administrator";
         private const string DEFAULT_ACCOUNT_PASSWORD = "ChangeMe2019!";
-        private readonly IEnumerable<string> SYSTEM_ROLES = new string[]    
+        private static readonly IEnumerable<string> SYSTEM_ROLES = new string[]    
         {
             "administrator",
             "editor",
@@ -20,37 +20,24 @@ namespace OTSSite
             "user"
         };
 
-        private readonly UserManager<ApplicationIdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
-        public DefaultAccountSeeds(
-            UserManager<ApplicationIdentityUser> userManager, 
-            RoleManager<IdentityRole> roleManager)
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-        }
-
-        public async Task<bool> Seed()
+        public static void Seed(
+            UserManager<ApplicationIdentityUser> _userManager,
+            RoleManager<IdentityRole> _roleManager)
         {
             
             foreach(var r in SYSTEM_ROLES)
             {
-                var result = await _roleManager.CreateAsync(new IdentityRole(r));
-                if (!result.Succeeded)               
-                    throw new Exception($"Failed to create Role {r}");              
+                if (_roleManager.Roles.Select(role => role.Name).Contains(r))
+                    continue;
+                _roleManager.CreateAsync(new IdentityRole(r)).Wait();           
             }
-
             var defaultAccount = new ApplicationIdentityUser(DEFAULT_ACCOUNT_NAME);
-            var res = await _userManager.CreateAsync(defaultAccount, DEFAULT_ACCOUNT_PASSWORD);
-            if(!res.Succeeded)           
-                throw new Exception($"Failed to create User {DEFAULT_ACCOUNT_NAME}");
-            
-            res = await _userManager.AddToRolesAsync(defaultAccount, SYSTEM_ROLES);
-            if(!res.Succeeded)
-                throw new Exception($"Failed to add {DEFAULT_ACCOUNT_NAME} to roles.");
-            
-            return true;
+
+            if(!_userManager.Users.Select(u => u.UserName).Contains(DEFAULT_ACCOUNT_NAME))
+                _userManager.CreateAsync(defaultAccount, DEFAULT_ACCOUNT_PASSWORD).Wait();
+
+            _userManager.AddToRolesAsync(defaultAccount, SYSTEM_ROLES).Wait();        
+
         }
     }
 }
