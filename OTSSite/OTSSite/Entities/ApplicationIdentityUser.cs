@@ -8,5 +8,10 @@ namespace OTSSite.Entities
 {
     public class ApplicationIdentityUser : IdentityUser
     {
+        public ApplicationIdentityUser() : base()
+        { }
+
+        public ApplicationIdentityUser(string username) : base (username)
+        { }
     }
 }
