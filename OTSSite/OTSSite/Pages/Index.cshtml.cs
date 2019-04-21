@@ -30,20 +30,22 @@ namespace OTSSite.Pages
         }
 
         public List<ArticleViewModel> ArticleViewModels { get; set; }
+        public int TotalArticles => ArticleViewModels.Count();
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(int index = 0)
         {
-            var articles = _articleRepository.GetByDate(DateTime.Now).ToList();
+            var articleEntires = _articleRepository
+                .GetAll()
+                .OrderByDescending(a => a.PublishDate)
+                .ToArray();
             ArticleViewModels = new List<ArticleViewModel>();
-            if (articles.Count == 0)
-                return Page();
-
-            ArticleViewModels = Mapper.Map<IEnumerable<ArticleViewModel>>(articles).ToList();
-            foreach(var a in ArticleViewModels)
+            var max = index + 9 >= articleEntires.Count() ? articleEntires.Count() : index + 9;
+            for(var i = index;i < max;i++)
             {
-                a.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == a.AuthorId).UserName;
-                var path = articles.FirstOrDefault(art => art.Id == a.ArticleId).ArticleFile;
-                a.ArticleText = await _articleFileRepository.GetArticle(path);
+                var articleViewModel = Mapper.Map<ArticleViewModel>(articleEntires[i]);
+                articleViewModel.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == articleEntires[i].AuthorId).UserName;
+                articleViewModel.ArticleText = await _articleFileRepository.GetArticle(articleEntires[i].ArticleFile);
+                ArticleViewModels.Add(articleViewModel);
             }
             return Page();
         }

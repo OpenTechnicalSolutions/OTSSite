@@ -21,25 +21,26 @@
     {
         MonthChange = true;
     }
-    if(YearChange || MonthChange)
-    {
-        <div class="date-header">
-        @if (YearChange)
+        if (YearChange)
         {
-            <h3>@d.Year</h3>
+            <div>
+                <h3>@d.Year</h3>
+            </div>
         }
-        @if (MonthChange)
+        if (MonthChange)
         {
-            <h4>@d.Month</h4>
+            <div>
+                <h4>@d.Month.ToMonthName()</h4>
+            </div>
         }
-        </div>
-    }
 
     LastIteratedYear = d.Year;
     LastIteratedMonth = d.Month;
     <div class="archive-link">
         <a asp-page="/Articles/ByDate" asp-route-date="@d.Date">@d.Date.ApproxDate()</a>
     </div>
+    YearChange = false;
+    MonthChange = false;
 }
 
 
