@@ -22,12 +22,13 @@ namespace OTSSite.Pages.Articles
 
         public IActionResult OnGet()
         {
-            List<DateTime> dates = new List<DateTime>();
+            var datesWithoutTime = new List<DateTime>();
             _articleRepository.GetAll()
                 .Select(a => a.PublishDate)
+                .OrderByDescending(d => d.Date)
                 .ToList()
-                .ForEach(d => dates[dates.IndexOf(d)] = d.Date);
-            Dates = dates.Distinct();
+                .ForEach(d => datesWithoutTime.Add(d.Date));
+            Dates = datesWithoutTime.Distinct();
 
             return Page();
         }

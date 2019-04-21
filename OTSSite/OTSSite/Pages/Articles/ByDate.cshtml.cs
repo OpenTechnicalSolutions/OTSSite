@@ -28,17 +28,21 @@ namespace OTSSite.Pages.Articles
             _userManager = userManager;
         }
 
-        IEnumerable<ArticleViewModel> Articles { get; set; }
-
-        public async Task<IActionResult> OnGet(DateTime date)
+        public List<ArticleViewModel> Articles { get; set; }
+        public int ArticleCount => Articles.Count();
+        public async Task<IActionResult> OnGet(DateTime date, int index = 0)
         {
-            var articlesFromEntities = _articleRepository.GetByDate(date);
-            Articles = Mapper.Map<IEnumerable<ArticleViewModel>>(articlesFromEntities);
-            foreach (var a in Articles)
+            var articlesFromEntities = _articleRepository
+                .GetByDate(date)
+                .OrderByDescending(a => a.PublishDate)
+                .ToArray();
+            Articles = new List<ArticleViewModel>();
+            var max = index + 9 >= articlesFromEntities.Count() ? articlesFromEntities.Count() : index + 9;
+            for(var i = index; i < max;i++)
             {
-                a.AuthorUserName = _userManager.Users.FirstOrDefault(u => u.Id == a.AuthorId).UserName;
-                var path = articlesFromEntities.FirstOrDefault(art => art.Id == a.ArticleId).ArticleFile;
-                a.ArticleText = await _articleFileRepository.GetArticle(path);
+                var articleViewModel = Mapper.Map<ArticleViewModel>(articlesFromEntities[i]);
+                articleViewModel.ArticleText = await _articleFileRepository.GetArticle(articlesFromEntities[i].ArticleFile);
+                Articles.Add(articleViewModel);
             }
             return Page();
         }
