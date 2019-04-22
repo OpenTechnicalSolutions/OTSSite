@@ -4,5 +4,16 @@
     ViewData["Title"] = "DeclinedArticles";
 }
 
-<h1>DeclinedArticles</h1>
-
+<h1>Declined Articles</h1>
+@foreach (var a in Model.DeclinedArticleViewModels)
+{
+    <div>
+        @a.Title
+    </div>
+    <div>
+        @a.AuthorUserName
+    </div>
+    <div>
+        @a.Status
+    </div>
+}

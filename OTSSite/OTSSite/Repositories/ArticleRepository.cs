@@ -53,7 +53,7 @@ namespace OTSSite.Repositories
         {
             return _dbContext.Articles
                 .Where(a => a.Status == Status.Published)
-                .OrderBy(a => a.PublishDate)
+                .OrderByDescending(a => a.PublishDate)
                 .Select(a => a.Id);
         }
 
@@ -91,9 +91,15 @@ namespace OTSSite.Repositories
                 .Where(a => a.Status == Status.Pending);           
         }
 
-        public Article GetPending(Guid id)
+        public Article GetAny(Guid id)
         {
             return _dbContext.Articles.FirstOrDefault(a => a.Id == id);
+        }
+
+        public IEnumerable<Article> GetAllDeclined()
+        {
+            return _dbContext.Articles
+                .Where(a => a.Status == Status.Declined);
         }
     }
 }

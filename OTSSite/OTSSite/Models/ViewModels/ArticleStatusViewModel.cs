@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Models.ViewModels
 {
-    public class PendingArticleViewModel
+    public class ArticleStatusViewModel
     {
         public Guid ArticleId { get; set; }
         public string Title { get; set; }

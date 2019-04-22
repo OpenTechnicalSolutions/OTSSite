@@ -82,7 +82,12 @@ namespace OTSSite.Repositories
             throw new NotImplementedException();
         }
 
-        public Comment GetPending(Guid id)
+        public Comment GetAny(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Comment> GetAllDeclined()
         {
             throw new NotImplementedException();
         }

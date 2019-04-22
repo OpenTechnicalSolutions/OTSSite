@@ -16,7 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OTSSite.Repositories;
 using OTSSite.Entities;
 using OTSSite.Models.ViewModels;
-using OTSSite.ExtensionMethods;
+using UsefulExtensionMethods.GeneralExtensions;
+using UsefulExtensionMethods.WebExtensions;
 using OTSSite.Configurations;
 
 namespace OTSSite
@@ -81,7 +82,7 @@ namespace OTSSite
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
                     .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
-                cfg.CreateMap<Entities.Article, Models.ViewModels.PendingArticleViewModel>()
+                cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleStatusViewModel>()
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 //ViewModels and Dtos to Entities
                 cfg.CreateMap<Models.CreateCommentDto, Entities.Comment>()
