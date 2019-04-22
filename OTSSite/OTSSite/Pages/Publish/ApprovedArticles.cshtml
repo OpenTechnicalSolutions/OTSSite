@@ -1,0 +1,20 @@
+﻿@page
+@model OTSSite.Pages.Publish.ApprovedArticlesModel
+@{
+    ViewData["Title"] = "ApprovedArticles";
+}
+
+<h1>Approved Articles</h1>
+@foreach (var a in Model.ApprovedArticleViewModels)
+{
+    <div>
+        @a.Title
+    </div>
+    <div>
+        @a.AuthorUserName
+    </div>
+    <div>
+        @a.Status
+    </div>
+}
+

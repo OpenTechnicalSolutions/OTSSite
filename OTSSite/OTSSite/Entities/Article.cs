@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace OTSSite.Entities
 {
+    public enum Status
+    {
+        Pending,
+        Published,
+        Declined
+    }
+
     public class Article
     {
         [Key]
@@ -24,6 +31,6 @@ namespace OTSSite.Entities
         public string Title { get; set; }
         [Required]
         public string ArticleFile { get; set; }
-        public bool Published { get; set; }
+        public Status Status { get; set; }
     }
 }

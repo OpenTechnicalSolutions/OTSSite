@@ -19,5 +19,8 @@ namespace OTSSite.Repositories
         IEnumerable<T> GetByTopic(string topic);
         IEnumerable<T> GetByDate(DateTime date);
         IEnumerable<T> GetAll();
+        IEnumerable<T> GetAllPending();
+        T GetAny(Guid id);
+        IEnumerable<T> GetAllDeclined();
     }
 }

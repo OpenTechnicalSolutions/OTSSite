@@ -28,7 +28,8 @@ namespace OTSSite.Repositories
 
         public Article Read(Guid id)
         {
-            var article = _dbContext.Articles.FirstOrDefault(a => a.Id == id);
+            var article = _dbContext.Articles
+                .FirstOrDefault(a => a.Id == id && a.Status == Status.Published);
             return article;
         }
 
@@ -44,23 +45,29 @@ namespace OTSSite.Repositories
 
         public IEnumerable<Article> GetByAuthor(string authorId)
         {
-            return _dbContext.Articles.Where(a => a.AuthorId == authorId);
+            return _dbContext.Articles
+                .Where(a => a.AuthorId == authorId && a.Status == Status.Published);
         }
 
         public IEnumerable<Guid> GetAllGuids()
         {
-            return _dbContext.Articles.OrderBy(a => a.PublishDate).Select(a => a.Id);
+            return _dbContext.Articles
+                .Where(a => a.Status == Status.Published)
+                .OrderByDescending(a => a.PublishDate)
+                .Select(a => a.Id);
         }
 
         public IEnumerable<Article> GetByTopic(string topic)
         {
-            return _dbContext.Articles.Where(a => a.Topic == topic);
+            return _dbContext.Articles
+                .Where(a => a.Topic == topic);
         }
 
         public IEnumerable<Article> GetByDate(DateTime date)
         {
             var dt = date.Date;
-            return _dbContext.Articles.Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1));
+            return _dbContext.Articles
+                .Where(a => a.PublishDate >= dt && a.PublishDate < dt.AddDays(1) && a.Status == Status.Published);
         }
 
         public IEnumerable<Article> GetAll()
@@ -76,6 +83,23 @@ namespace OTSSite.Repositories
         public IEnumerable<Article> GetByParent(Guid parent)
         {
             throw new NotImplementedException("GetByParent  may only be used by a CommentRepository.");
+        }
+
+        public IEnumerable<Article> GetAllPending()
+        {
+            return _dbContext.Articles
+                .Where(a => a.Status == Status.Pending);           
+        }
+
+        public Article GetAny(Guid id)
+        {
+            return _dbContext.Articles.FirstOrDefault(a => a.Id == id);
+        }
+
+        public IEnumerable<Article> GetAllDeclined()
+        {
+            return _dbContext.Articles
+                .Where(a => a.Status == Status.Declined);
         }
     }
 }

@@ -19,4 +19,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Reference Include="UsefulExtensionMethods">
+      <HintPath>..\..\..\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods\bin\Debug\netcoreapp2.2\UsefulExtensionMethods.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
