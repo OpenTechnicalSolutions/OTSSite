@@ -76,5 +76,15 @@ namespace OTSSite.Repositories
         {
             throw new NotImplementedException("GetAll may only be used by an ArticleRepository.");
         }
+
+        public IEnumerable<Comment> GetAllPending()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment GetPending(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -76,14 +76,22 @@ namespace OTSSite
 
             AutoMapper.Mapper.Initialize(cfg =>
             {
+                //Entities to ViewModels and Dtos
                 cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleViewModel>()
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Comment, Models.ViewModels.CommentViewModel>()
                     .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Entities.Article, Models.ViewModels.PendingArticleViewModel>()
+                    .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+                //ViewModels and Dtos to Entities
                 cfg.CreateMap<Models.CreateCommentDto, Entities.Comment>()
                     .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));
                 cfg.CreateMap<Models.CreateArticleDto, Entities.Article>()
-                    .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));
+                    .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now))
+                    .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Status.Pending));
+                //ViewModels to Dtos
+
+                //Dtos to ViewModels
             });
 
             app.UseHttpsRedirection();
