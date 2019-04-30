@@ -30,7 +30,7 @@ namespace OTSSite.Pages.Articles
 
         public List<ArticleViewModel> Articles { get; set; }
         public int ArticleCount => Articles.Count();
-        public async Task<IActionResult> OnGet(DateTime date, int index = 0)
+        public async Task<IActionResult> OnGetAsync(DateTime date, int index = 0)
         {
             var articlesFromEntities = _articleRepository
                 .GetByDate(date)

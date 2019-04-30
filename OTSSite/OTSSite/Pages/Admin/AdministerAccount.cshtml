@@ -1,0 +1,41 @@
+﻿@page
+@model OTSSite.Pages.Admin.AdministerAccountModel
+@{
+    ViewData["Title"] = "AdministerAccount";
+}
+
+<div>
+    <div>@Model.CurrentUserSettings.UserName</div>
+    <div>
+        @if (Model.CurrentUserSettings.LockoutEnabled)
+        {
+            <div><b>Status:</b> Active</div>
+        }
+        else
+        {
+            <div><b>Status:</b> Locked</div>
+        }
+    </div>
+    <form method="post">
+        <input asp-for="@Model.CurrentUserSettings.UserId" name="modifyAccountViewModel.UserId" type="hidden" />
+        <input asp-for="@Model.CurrentUserSettings.UserName" name="modifyAccountViewModel.UserName" type="hidden" />
+        <div>
+            <label asp-for="@Model.CurrentUserSettings.LockoutEnabled"></label>
+            <input asp-for="@Model.CurrentUserSettings.LockoutEnabled" name="modifyAccountViewModel.LockoutEnabled" type="checkbox"/>
+        </div>
+        <div>
+            <label>Roles</label>
+            @foreach(var r in Model.CurrentUserSettings.Roles.Keys)
+            {
+                <div>
+                    <label>@r</label>
+                    <input type="hidden" name="modifyAccountViewModel.Index" value="@r" />
+                    <input asp-for="@Model.CurrentUserSettings.Roles[r]" name="modifyAccountViewModel.Roles[@r]" />
+                </div>
+            }
+        </div>  
+        <input type="submit" />
+    </form>   
+</div>
+
+

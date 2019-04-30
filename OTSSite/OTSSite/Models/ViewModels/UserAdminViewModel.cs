@@ -10,6 +10,6 @@ namespace OTSSite.Models.ViewModels
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string[] Roles { get; set; }
-        public bool Enables { get; set; }
+        public bool LockoutEnabled { get; set; }
     }
 }

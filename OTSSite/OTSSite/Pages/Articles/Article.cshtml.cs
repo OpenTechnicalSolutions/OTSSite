@@ -34,7 +34,7 @@ namespace OTSSite.Pages.Articles
         public ArticleViewModel ArticleViewModel { get; set; }
         public IEnumerable<CommentViewModel> TopLevelComments { get; set; }
 
-        public async Task<IActionResult> OnGet(Guid id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             var articleFromEntity = _articleRepository.Read(id);
             if (articleFromEntity == null)

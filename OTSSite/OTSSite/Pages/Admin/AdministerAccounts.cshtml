@@ -1,8 +1,39 @@
 ﻿@page
 @model OTSSite.Pages.Admin.AdministerAccountsModel
 @{
-    ViewData["Title"] = "AdministerAccounts";
+    ViewData["Title"] = "Account Administration";
 }
 
-<h1>AdministerAccounts</h1>
+<h1>Account Administration</h1>
+
+@foreach (var u in Model.Users)
+{
+    <a asp-page="/Admin/AdministerAccount" asp-route-userId="@u.UserId">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        @u.UserName<br />
+                        @if (u.LockoutEnabled)
+                        {
+                            <span>Active</span>
+                        }
+                        else
+                        {
+                            <span>Locked</span>
+                        }
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach (var r in u.Roles)
+                            {
+                                <li>@r</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </a>
+}
 

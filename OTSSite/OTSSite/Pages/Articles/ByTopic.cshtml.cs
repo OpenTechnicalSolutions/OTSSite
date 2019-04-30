@@ -30,7 +30,7 @@ namespace OTSSite.Pages.Articles
         public IEnumerable<ArticleViewModel> Articles { get; set; }
         public string Topic { get; set; }
 
-        public async Task<IActionResult> OnGet(string topic)
+        public async Task<IActionResult> OnGetAsync(string topic)
         {
             Topic = topic;
             var articlesFromEntities = _articleRepository.GetByTopic(topic);
