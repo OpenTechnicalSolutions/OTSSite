@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408024209_initial.cs" />
+    <Compile Remove="Data\Migrations\20190408024209_initial.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190408042523_ArticleFilestoArticleFile.cs" />
+    <Compile Remove="Data\Migrations\20190408042523_ArticleFilestoArticleFile.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190415025134_imagepaths.cs" />
+    <Compile Remove="Data\Migrations\20190415025134_imagepaths.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190418033232_addedPublishedArticleBool.cs" />
+    <Compile Remove="Data\Migrations\20190418033232_addedPublishedArticleBool.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190419025620_addRolesToDB.cs" />
+    <Compile Remove="Data\Migrations\20190419025620_addRolesToDB.Designer.cs" />
     <Compile Remove="Migrations\20190409154650_initial.cs" />
     <Compile Remove="Migrations\20190409154650_initial.Designer.cs" />
   </ItemGroup>
@@ -24,6 +36,11 @@
     <Reference Include="UsefulExtensionMethods">
       <HintPath>..\..\..\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods\bin\Debug\netcoreapp2.2\UsefulExtensionMethods.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

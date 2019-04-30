@@ -84,6 +84,10 @@ namespace OTSSite
                     .ForMember(dest => dest.CommentId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Article, Models.ViewModels.ArticleStatusViewModel>()
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<ApplicationIdentityUser, UserAdminViewModel>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<ApplicationIdentityUser, ModifyAccountViewModel>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
                 //ViewModels and Dtos to Entities
                 cfg.CreateMap<Models.CreateCommentDto, Entities.Comment>()
                     .ForMember(dest => dest.PublishDate, opt => opt.MapFrom(src => DateTime.Now));

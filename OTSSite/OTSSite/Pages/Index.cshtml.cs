@@ -33,7 +33,7 @@ namespace OTSSite.Pages
         public List<ArticleViewModel> ArticleViewModels { get; set; }
         public int TotalArticles => ArticleViewModels.Count();
 
-        public async Task<IActionResult> OnGet(int index = 0)
+        public async Task<IActionResult> OnGetAsync(int index = 0)
         {
             var articleEntires = _articleRepository
                 .GetAll()
