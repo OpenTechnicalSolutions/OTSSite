@@ -7,9 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OTSSite.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Images")]
     [ApiController]
-    public class ImageController : ControllerBase
+    public class ImageController : Controller
     {
-    }
+        [Route("{userName}/{fileName}")]
+        public IActionResult GetImage(string userName, string fileName)
+        {
+            return Ok();
+        }
+    }       
 }

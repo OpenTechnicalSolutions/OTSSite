@@ -11,6 +11,5 @@ namespace OTSSite.Models
         public string Title { get; set; }
         public string Topic { get; set; }
         public IFormFile Article { get; set; }
-        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

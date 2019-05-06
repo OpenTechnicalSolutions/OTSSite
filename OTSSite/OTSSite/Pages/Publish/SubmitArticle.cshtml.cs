@@ -42,7 +42,7 @@ namespace OTSSite.Pages.Publish
             if (!ModelState.IsValid)
                 return Page();
             var username = _userManager.GetUserName(User);
-            var path = await _articleFileRepository.SaveArticle(articleDto.Article, articleDto.Images, username);
+            var path = await _articleFileRepository.SaveArticle(articleDto.Article, username);
             var articleEntity = Mapper.Map<Article>(articleDto);
             articleEntity.AuthorId = _userManager.GetUserId(User);
             articleEntity.ArticleFile = path;
