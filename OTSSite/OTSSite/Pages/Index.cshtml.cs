@@ -37,6 +37,7 @@ namespace OTSSite.Pages
         {
             var articleEntires = _articleRepository
                 .GetAll()
+                .Where(a => a.Status == Status.Published)
                 .OrderByDescending(a => a.PublishDate)
                 .ToArray();
             ArticleViewModels = new List<ArticleViewModel>();

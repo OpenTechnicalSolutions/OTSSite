@@ -21,7 +21,11 @@ namespace OTSSite.Pages.Articles
         public IEnumerable<String> Topics { get; set; }
         public IActionResult OnGet()
         {
-            var topics = _articleRepository.GetAll().Select(a => a.Topic).Distinct();
+            var topics = _articleRepository
+                .GetAll()
+                .Where(a => a.Status == Status.Published)
+                .Select(a => a.Topic)
+                .Distinct();
             Topics = topics;
             return Page();
         }

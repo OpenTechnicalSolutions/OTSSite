@@ -24,6 +24,7 @@ namespace OTSSite.Pages.Articles
         {
             var datesWithoutTime = new List<DateTime>();
             _articleRepository.GetAll()
+                .Where(a => a.Status == Status.Published)
                 .Select(a => a.PublishDate)
                 .OrderByDescending(d => d.Date)
                 .ToList()
