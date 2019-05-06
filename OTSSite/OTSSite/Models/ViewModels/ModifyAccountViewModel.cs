@@ -15,13 +15,22 @@ namespace OTSSite.Models.ViewModels
         public bool LockoutEnabled { get; set; }
         public ModifyAccountViewModel()
         {
-           /* Roles = new Dictionary<string, bool>()
-            {
-                { "administrator", false },
-                { "editor", false },
-                { "author", false },
-                { "user", false }
-            };*/
+        }
+        /// <summary>
+        /// Adds the available and currently applied roles to the user in this model.
+        /// </summary>
+        /// <param name="availableRoles"></param>
+        /// <param name="appliedRoles"></param>
+        public void AddRoles(
+            IEnumerable<string> availableRoles, 
+            IEnumerable<string> appliedRoles)
+        {
+            Roles = new Dictionary<string, bool>();
+            foreach (var r in availableRoles)
+                if (appliedRoles.Contains(r))
+                    Roles.Add(r, true);
+                else
+                    Roles.Add(r, false);
         }
     }
 }

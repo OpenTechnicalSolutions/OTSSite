@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OTSSite.Entities;
@@ -40,6 +41,7 @@ namespace OTSSite.Controllers
         /// <param name="comment">DTO for Comment Creation</param>
         /// <returns>Result of creation</returns>
         [HttpPost]
+        [Authorize(Roles = "user, editor, author, administrator")]
         public IActionResult CreateComment([FromBody] CreateCommentDto comment)
         {
             var commentEntity = Mapper.Map<Comment>(comment);
