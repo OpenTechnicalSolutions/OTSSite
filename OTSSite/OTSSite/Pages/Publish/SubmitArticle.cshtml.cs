@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +13,7 @@ using OTSSite.Repositories;
 
 namespace OTSSite.Pages.Publish
 {
+    [Authorize(Roles = "author")]
     public class SubmitArticleModel : PageModel
     {
         private readonly IRepository<Article> _articleRepository;
@@ -40,14 +42,14 @@ namespace OTSSite.Pages.Publish
             if (!ModelState.IsValid)
                 return Page();
             var username = _userManager.GetUserName(User);
-            var path = await _articleFileRepository.SaveArticle(articleDto.Article, articleDto.Images, username);
+            var path = await _articleFileRepository.SaveArticle(articleDto.Article, username);
             var articleEntity = Mapper.Map<Article>(articleDto);
             articleEntity.AuthorId = _userManager.GetUserId(User);
             articleEntity.ArticleFile = path;
             _articleRepository.Create(articleEntity);
             if (!_articleRepository.Save())
                 throw new Exception("Failed to create article database entry.");
-            return RedirectToPage("../Articles/Article", new { id = articleEntity.Id });
+            return RedirectToPage("/Articles/Article", new { id = articleEntity.Id });
         }
     }
 }

@@ -37,7 +37,6 @@ namespace OTSSite
                 _userManager.CreateAsync(defaultAccount, DEFAULT_ACCOUNT_PASSWORD).Wait();
 
             _userManager.AddToRolesAsync(defaultAccount, SYSTEM_ROLES).Wait();        
-
         }
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OTSSite.Repositories
 {
@@ -44,7 +45,7 @@ namespace OTSSite.Repositories
         /// <param name="formFile">article IFormFile</param>
         /// <param name="username">article author username</param>
         /// <returns>path to file</returns>
-        public async Task<string> SaveArticle(IFormFile articleFormFile, IEnumerable<IFormFile> imageFormFiles, string username)
+        public async Task<string> SaveArticle(IFormFile articleFormFile, string username)
         {
             string basePath;                                                //Path to save to
             string fullPath;                                                //Path with file name
@@ -58,7 +59,6 @@ namespace OTSSite.Repositories
                 basePath = articlePath + $"/{username}/{Guid.NewGuid()}/";      //Set path
             
             Directory.CreateDirectory(basePath);                            //Create article directory
-            Directory.CreateDirectory(basePath + "images/");                //Create images directory
 
             var extension =                                                 //Get extension
                 Path.GetExtension(articleFormFile.FileName).ToLower();  
@@ -72,10 +72,10 @@ namespace OTSSite.Repositories
             {
                 await articleFormFile.CopyToAsync(fs);
             }
-
+            /*
             if (imageFormFiles == null)                                     //If imageFormFiles is null
                 return fullPath;                                            //Return path with filename.
-
+            
             //Save images
             foreach (var formFile in imageFormFiles)
             {
@@ -84,9 +84,52 @@ namespace OTSSite.Repositories
                 {
                     await formFile.CopyToAsync(fs);
                 }
-            }
+            }*/
 
             return fullPath;                                                 //Return path with filename.
+        }
+
+        public bool SaveImage(string userName, IFormFile image)
+        {
+            if (!ConfirmImage(image.ContentType, image.FileName))
+                return false;
+
+            var imageRoot = _fileWriteOptions.Value.ImageRoot;
+            var imageLocation = imageRoot[imageRoot.Length - 1] == '/' ?
+                imageRoot + $"{userName}/{image.FileName}" :
+                imageRoot + $"/{userName}/{image.FileName}";
+            using (FileStream fs = 
+                new FileStream(imageLocation, FileMode.Create, FileAccess.Write))
+            {
+                image.CopyToAsync(fs);
+            }
+            return true;
+        }
+
+        //public Image 
+
+        private bool ConfirmImage(string contentType, string fileName)
+        {
+            //Supported ContentTypes
+            var contentTypes = new[]
+            {
+                "image/jpg",
+                "image/jpeg,",
+                "image/gif",
+                "image/png",
+                "image/x-png",
+                "image/pjpeg"
+            };
+            //Supported ExtensionTypes
+            var extensionTypes = new[]
+            {
+                ".jpg",
+                ".jpeg",
+                ".gif",
+                ".png"
+            };
+
+            return contentTypes.Contains(contentType) && extensionTypes.Contains(Path.GetExtension(fileName));
         }
     }
 }
