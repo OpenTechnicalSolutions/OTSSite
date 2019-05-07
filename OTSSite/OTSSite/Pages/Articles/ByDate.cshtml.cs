@@ -15,12 +15,12 @@ namespace OTSSite.Pages.Articles
     public class ByDateModel : PageModel
     {
         private readonly IRepository<Article> _articleRepository;
-        private readonly ArticleFileRepository _articleFileRepository;
+        private readonly SiteFileRepository _articleFileRepository;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
 
         public ByDateModel(
             IRepository<Article> articleRepository,
-            ArticleFileRepository articleFileRepository,
+            SiteFileRepository articleFileRepository,
             UserManager<ApplicationIdentityUser> userManager)
         {
             _articleRepository = articleRepository;

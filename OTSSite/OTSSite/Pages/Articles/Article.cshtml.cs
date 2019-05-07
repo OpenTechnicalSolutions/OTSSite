@@ -17,13 +17,13 @@ namespace OTSSite.Pages.Articles
         private readonly IRepository<Article> _articleRepository;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
         private readonly IRepository<Comment> _commentRepository;
-        private readonly ArticleFileRepository _articleFileRepository;
+        private readonly SiteFileRepository _articleFileRepository;
 
         public ArticleModel(
             IRepository<Article> articleRepository,
             UserManager<ApplicationIdentityUser> userManager,
             IRepository<Comment> commentRepository,
-            ArticleFileRepository articleFileRepository)
+            SiteFileRepository articleFileRepository)
         {
             _articleRepository = articleRepository;
             _userManager = userManager;

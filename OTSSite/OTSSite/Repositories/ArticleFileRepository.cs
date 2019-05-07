@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using OTSSite.Configurations;
 using System;
@@ -11,13 +12,17 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace OTSSite.Repositories
 {
-    public class ArticleFileRepository
+    public class SiteFileRepository
     {
         private readonly IOptions<FileWriteOptions> _fileWriteOptions;
+        private readonly IHostingEnvironment _environment;
 
-        public ArticleFileRepository(IOptions<FileWriteOptions> options)
+        public SiteFileRepository(
+            IOptions<FileWriteOptions> options,
+            IHostingEnvironment environment)
         {
             _fileWriteOptions = options;
+            _environment = environment;
         }
         /// <summary>
         /// Return an article
@@ -72,42 +77,25 @@ namespace OTSSite.Repositories
             {
                 await articleFormFile.CopyToAsync(fs);
             }
-            /*
-            if (imageFormFiles == null)                                     //If imageFormFiles is null
-                return fullPath;                                            //Return path with filename.
-            
-            //Save images
-            foreach (var formFile in imageFormFiles)
-            {
-                using (FileStream fs = 
-                    new FileStream(basePath + "images/" + formFile.FileName, FileMode.Create, FileAccess.Write))
-                {
-                    await formFile.CopyToAsync(fs);
-                }
-            }*/
-
             return fullPath;                                                 //Return path with filename.
         }
 
         public bool SaveImage(string userName, IFormFile image)
         {
-            if (!ConfirmImage(image.ContentType, image.FileName))
+            if (!ConfirmImage(image.ContentType, image.FileName))           //Confirms content type
                 return false;
 
-            var imageRoot = _fileWriteOptions.Value.ImageRoot;
-            var imageLocation = imageRoot[imageRoot.Length - 1] == '/' ?
+            var imageLocation = Path.Combine(_environment.WebRootPath, $"{userName}/{image.FileName}");
+            //var imageRoot = _fileWriteOptions.Value.ImageRoot;              //Gets image root storage location from appsettings.json
+            /*var imageLocation = imageRoot[imageRoot.Length - 1] == '/' ?    //Create a full file path
                 imageRoot + $"{userName}/{image.FileName}" :
-                imageRoot + $"/{userName}/{image.FileName}";
-            using (FileStream fs = 
-                new FileStream(imageLocation, FileMode.Create, FileAccess.Write))
-            {
+                imageRoot + $"/{userName}/{image.FileName}";*/
+
+                                                                            //Write the file to path
+            using (FileStream fs = new FileStream(imageLocation, FileMode.Create, FileAccess.Write))          
                 image.CopyToAsync(fs);
-            }
             return true;
         }
-
-        //public Image 
-
         private bool ConfirmImage(string contentType, string fileName)
         {
             //Supported ContentTypes

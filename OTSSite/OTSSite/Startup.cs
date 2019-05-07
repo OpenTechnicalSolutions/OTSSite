@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OTSSite.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OTSSite.Repositories;
+using OTSSite.Configurations;
+using OTSSite.Data;
 using OTSSite.Entities;
 using OTSSite.Models.ViewModels;
-using UsefulExtensionMethods.GeneralExtensions;
-using UsefulExtensionMethods.WebExtensions;
-using OTSSite.Configurations;
+using OTSSite.Repositories;
+using System;
 
 namespace OTSSite
 {
@@ -53,7 +47,7 @@ namespace OTSSite
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddTransient<IRepository<Article>, ArticleRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
-            services.AddScoped(typeof(ArticleFileRepository));
+            services.AddScoped(typeof(SiteFileRepository));
 
             services.AddOptions();
             services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
