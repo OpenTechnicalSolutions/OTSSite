@@ -19,13 +19,13 @@ namespace OTSSite.Pages.Publish
         private readonly IRepository<Article> _articleRepository;
         private readonly IRepository<Comment> _commentArticle;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
-        private readonly ArticleFileRepository _articleFileRepository;
+        private readonly SiteFileRepository _articleFileRepository;
 
         public SubmitArticleModel(
             IRepository<Article> articleRepository,
             IRepository<Comment> commentRepository,
             UserManager<ApplicationIdentityUser> userManager,
-            ArticleFileRepository articleFileRepository)
+            SiteFileRepository articleFileRepository)
         {
             _articleRepository = articleRepository;
             _commentArticle = commentRepository;

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OTSSite.Entities;
-using UsefulExtensionMethods.GeneralExtensions;
-using UsefulExtensionMethods.WebExtensions;
 using OTSSite.Models.ViewModels;
 using OTSSite.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OTSSite.Pages
 {
@@ -18,12 +15,12 @@ namespace OTSSite.Pages
     {
         private readonly IRepository<Article> _articleRepository;
         private readonly UserManager<ApplicationIdentityUser> _userManager;
-        private readonly ArticleFileRepository _articleFileRepository;
+        private readonly SiteFileRepository _articleFileRepository;
 
         public IndexModel(
             IRepository<Article> articleRepository,
             UserManager<ApplicationIdentityUser> userManager,
-            ArticleFileRepository articleFileRepository)
+            SiteFileRepository articleFileRepository)
         {
             _articleRepository = articleRepository;
             _userManager = userManager;

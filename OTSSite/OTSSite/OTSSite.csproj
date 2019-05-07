@@ -33,14 +33,12 @@
 
 
   <ItemGroup>
-    <Reference Include="UsefulExtensionMethods">
-      <HintPath>..\..\..\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods\bin\Debug\netcoreapp2.2\UsefulExtensionMethods.dll</HintPath>
-    </Reference>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\..\..\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods.csproj" />
   </ItemGroup>
 
 </Project>
