@@ -82,17 +82,18 @@ namespace OTSSite.Repositories
 
         public bool SaveImage(string userName, IFormFile image)
         {
-            if (!ConfirmImage(image.ContentType, image.FileName))           //Confirms content type
+            if (!ConfirmImage(image.ContentType, image.FileName.ToLower()))           //Confirms content type
                 return false;
 
-            var imageLocation = Path.Combine(_environment.WebRootPath, $"{userName}/{image.FileName}");
+            var imageSavePath = Path.Combine(_environment.WebRootPath, $"{userName}/");
+            var imageFullPath = Path.Combine(imageSavePath, $"{image.FileName}");
             //var imageRoot = _fileWriteOptions.Value.ImageRoot;              //Gets image root storage location from appsettings.json
             /*var imageLocation = imageRoot[imageRoot.Length - 1] == '/' ?    //Create a full file path
                 imageRoot + $"{userName}/{image.FileName}" :
                 imageRoot + $"/{userName}/{image.FileName}";*/
-
-                                                                            //Write the file to path
-            using (FileStream fs = new FileStream(imageLocation, FileMode.Create, FileAccess.Write))          
+            if (!Directory.Exists(imageSavePath))
+                Directory.CreateDirectory(imageSavePath);                                                                            //Write the file to path
+            using (FileStream fs = new FileStream(imageFullPath, FileMode.Create, FileAccess.Write))          
                 image.CopyToAsync(fs);
             return true;
         }
@@ -102,7 +103,7 @@ namespace OTSSite.Repositories
             var contentTypes = new[]
             {
                 "image/jpg",
-                "image/jpeg,",
+                "image/jpeg",
                 "image/gif",
                 "image/png",
                 "image/x-png",

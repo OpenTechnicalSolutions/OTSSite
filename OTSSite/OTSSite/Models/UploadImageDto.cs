@@ -9,6 +9,6 @@ namespace OTSSite.Models
     public class UploadImageDto
     {
         public string UserName { get; set; }
-        public IFormFile ImageFile { get; set; }
+        public ICollection<IFormFile> ImageFiles { get; set; }
     }
 }

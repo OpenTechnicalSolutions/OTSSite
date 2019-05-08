@@ -11,7 +11,7 @@ using OTSSite.Entities;
 using OTSSite.Models;
 using OTSSite.Repositories;
 
-namespace OTSSite.Pages.Publish
+namespace OTSSite.Pages.Authors
 {
     [Authorize(Roles = "author")]
     public class SubmitArticleModel : PageModel

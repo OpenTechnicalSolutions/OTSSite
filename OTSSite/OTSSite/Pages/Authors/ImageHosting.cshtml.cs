@@ -35,10 +35,10 @@ namespace OTSSite.Pages.Authors
         {
             if (_userManager.Users.FirstOrDefault(u => u.UserName == imageDto.UserName) == null)
                 return Unauthorized();
-
-            if (_fileRepository.SaveImage(imageDto.UserName, imageDto.ImageFile))
-                return RedirectToPage("AuthorDashboard");
-            throw new Exception("Failed to save image.");
+            foreach(var img in imageDto.ImageFiles)
+            if (!_fileRepository.SaveImage(imageDto.UserName, img))
+                throw new Exception("Image Upload Failed");
+            return RedirectToPage("AuthorDashboard");
         }
     }
 }
