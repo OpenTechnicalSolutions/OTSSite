@@ -75,7 +75,7 @@ namespace OTSSiteMVC.Controllers
             //Save file and add path to articleEntity
             articleEntity.ArticlePath = 
                 await _fileRepository
-                .SaveArticle(createArticleDto.ArticleFile, createArticleDto.UserName));
+                .SaveArticle(createArticleDto.ArticleFile, createArticleDto.UserName);
             //Confirm file was saved.
             if (articleEntity.ArticlePath == null)
                 return BadRequest();
