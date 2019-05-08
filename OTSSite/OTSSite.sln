@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OTSSite", "OTSSite\OTSSite.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsefulExtensionMethods", "..\..\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods\UsefulExtensionMethods.csproj", "{0ABD9873-489C-4E81-A129-47F61A011B12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OTSSiteMVC", "OTSSiteMVC\OTSSiteMVC.csproj", "{6AA52802-EB25-4A38-A0EC-678770303F86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0ABD9873-489C-4E81-A129-47F61A011B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ABD9873-489C-4E81-A129-47F61A011B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ABD9873-489C-4E81-A129-47F61A011B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA52802-EB25-4A38-A0EC-678770303F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA52802-EB25-4A38-A0EC-678770303F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA52802-EB25-4A38-A0EC-678770303F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA52802-EB25-4A38-A0EC-678770303F86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
