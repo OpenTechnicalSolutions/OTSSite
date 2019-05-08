@@ -14,6 +14,7 @@ using OTSSiteMVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTSSiteMVC.Entities;
+using OTSSiteMVC.Configurations;
 
 namespace OTSSiteMVC
 {
@@ -42,7 +43,9 @@ namespace OTSSiteMVC
             services.AddIdentity<AppIdentityUser, AppIdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            //Add Configureation Options
+            services.AddOptions();
+            services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -60,6 +63,18 @@ namespace OTSSiteMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                //DTO's to Entities
+                cfg.CreateMap<Models.CreateUserDto, Entities.AppIdentityUser>();
+                cfg.CreateMap<Models.CreateArticleDto, Entities.Article>();
+
+                //Entities to DTO's
+                cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>();
+                cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
+            });
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
