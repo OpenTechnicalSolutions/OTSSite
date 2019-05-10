@@ -24,8 +24,7 @@ namespace OTSSiteMVC.Entities
         public string AuthorUserName { get; set; }
         [ForeignKey("UserId")]
         [Required]
-        public string AuthorId { get; set; }
-        [Required]
+        public Guid AuthorId { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime PublishDate { get; set; }
         [Required]

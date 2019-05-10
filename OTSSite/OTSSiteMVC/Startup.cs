@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OTSSiteMVC.Entities;
 using OTSSiteMVC.Configurations;
+using OTSSiteMVC.Repositories;
 
 namespace OTSSiteMVC
 {
@@ -43,6 +44,7 @@ namespace OTSSiteMVC
             services.AddIdentity<AppIdentityUser, AppIdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient(typeof(SiteFileRepository));
             //Add Configureation Options
             services.AddOptions();
             services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
@@ -73,6 +75,7 @@ namespace OTSSiteMVC
                 //Entities to DTO's
                 cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>();
                 cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
+                cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>();
             });
 
 

@@ -18,6 +18,15 @@ namespace OTSSiteMVC.Models
         public string ArticleText { get; set; }
     }
 
+    public class ArticleInfoDto
+    {
+        public string Title { get; set; }
+        public string Topic { get; set; }
+        public string ArticleId { get; set; }
+        public string AuthorUserName { get; set; }
+        public string PublishDate { get; set; }
+    }
+
     public class CreateArticleDto
     {
         [ForeignKey("UserId")]

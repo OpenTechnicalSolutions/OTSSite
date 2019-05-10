@@ -88,5 +88,6 @@ namespace OTSSiteMVC.Controllers
             //Redirect to GetArticle action
             return CreatedAtRoute("GetArticle", new { articleId = articleEntity.Id }, articleToReturn);
         }
+
     }
 }

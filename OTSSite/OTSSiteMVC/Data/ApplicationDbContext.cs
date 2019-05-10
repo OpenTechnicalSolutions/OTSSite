@@ -14,5 +14,6 @@ namespace OTSSiteMVC.Data
 
         public DbSet<Article> Articles { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<ImageData> Images { get; set; }
     }
 }
