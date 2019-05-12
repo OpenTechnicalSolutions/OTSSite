@@ -6,6 +6,7 @@
 <h1>Register</h1>
 
 <form class="form-control" id="registerForm">
+    @Html.AntiForgeryToken()
     <div class="form-group">
         <label asp-for="UserName"></label>
         <input asp-for="UserName" id="userName" type="text" />

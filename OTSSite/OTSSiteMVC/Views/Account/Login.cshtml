@@ -5,32 +5,18 @@
 
 <h1>Login</h1>
 
-<form class="form-control" id="login-form">
-    <div class="form-group" id="login-form-username">
+<form class="form-control" id="loginForm">
+    <div class="form-group">
         <label asp-for="UserName"></label>
-        <input asp-for="UserName" type="text" />
+        <input asp-for="UserName" type="text" id="userName"/>
     </div>
-    <div class="form-group" id="login-form-password">
+    <div class="form-group" id="password">
         <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
+        <input asp-for="Password" type="password" id="password"/>
     </div>
-    <div class="form-group" id="login-form-submit">
-        <input type="submit" />
+    <div class="form-group">
+        <input type="submit" id="submitButton"/>
     </div>
 </form>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    $("#login-form").submit(function (e) {
-        var formElement = document.getElementById("#login-form");
-        var jsonform = JSON.stringify(formElement);
-        $.ajax({
-            url: "/api/Accounts/Login",
-            method: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            data: jsonform
-        }).done(function (msg) {
-
-        });
-    });
-</script>
+<script src="~/scripts/AccountScripts.js"></script>

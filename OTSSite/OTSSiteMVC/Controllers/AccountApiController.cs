@@ -35,6 +35,7 @@ namespace OTSSiteMVC.Controllers
         /// <param name="createUserDto">Dto to create account from</param>
         /// <returns></returns>
         [HttpPost("Register")]
+        [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDto)
         {
