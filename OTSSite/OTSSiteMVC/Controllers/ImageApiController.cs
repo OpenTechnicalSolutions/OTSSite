@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,8 @@ namespace OTSSiteMVC.Controllers
             _dbContext = dbContext;
         }
         [HttpPost("Upload")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Author")]
         public async Task<IActionResult> SaveImage([FromBody] IFormFile image)
         {
             if (image == null)
@@ -57,6 +60,7 @@ namespace OTSSiteMVC.Controllers
             return CreatedAtRoute("ImageContent", new { userName = userEntity.UserName, fileName = image.FileName }, imageEntity);
         }
         [HttpGet("{userName}/{fileName}")]
+        [AllowAnonymous]
         public IActionResult GetImage(string userName, string fileName)
         {
             var image = _dbContext.Images

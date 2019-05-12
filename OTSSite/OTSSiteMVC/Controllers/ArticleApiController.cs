@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OTSSiteMVC.Data;
@@ -32,6 +33,7 @@ namespace OTSSiteMVC.Controllers
         /// <param name="articleId">Article Id Guid</param>
         /// <returns>JSON Object of Article.</returns>
         [HttpGet("{articleId}", Name = "GetArticle")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetArticle(Guid articleId)
         {
             //Bad request if no ID specified.
@@ -61,6 +63,8 @@ namespace OTSSiteMVC.Controllers
         /// <param name="createArticleDto">Model bound Article object.</param>
         /// <returns>Success confirmations.</returns>
         [HttpPost()]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "author")]
         public async Task<IActionResult> CreateArticle([FromBody] CreateArticleDto createArticleDto)
         {
             //Check ModelState
@@ -88,6 +92,5 @@ namespace OTSSiteMVC.Controllers
             //Redirect to GetArticle action
             return CreatedAtRoute("GetArticle", new { articleId = articleEntity.Id }, articleToReturn);
         }
-
     }
 }

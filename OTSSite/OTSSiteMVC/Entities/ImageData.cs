@@ -13,8 +13,11 @@ namespace OTSSiteMVC.Entities
         [Required]
         [ForeignKey("UserId")]
         public Guid UserId { get; set; }
+        [Required]
         public string UserName { get; set; }
+        [Required]
         public string FileName { get; set; }
+        [Required]
         public string ContentType { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+﻿@model OTSSiteMVC.Models.LoginDto
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<form class="form-control" id="login-form">
+    <div class="form-group" id="login-form-username">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" type="text" />
+    </div>
+    <div class="form-group" id="login-form-password">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+    </div>
+    <div class="form-group" id="login-form-submit">
+        <input type="submit" />
+    </div>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $("#login-form").submit(function (e) {
+        var formElement = document.getElementById("#login-form");
+        var jsonform = JSON.stringify(formElement);
+        $.ajax({
+            url: "/api/Accounts/Login",
+            method: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            data: jsonform
+        }).done(function (msg) {
+
+        });
+    });
+</script>

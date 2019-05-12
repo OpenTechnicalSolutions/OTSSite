@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OTSSiteMVC.Data;
@@ -31,6 +32,7 @@ namespace OTSSiteMVC.Controllers
         /// <param name="total">How many articles you want.</param>
         /// <returns>A list of GetArticleDtos</returns>
         [HttpGet("{startIndex}/{total}")]
+        [AllowAnonymous]
         public IActionResult GetSetOfArticles(int startIndex, int total)
         {
             if (startIndex <= 0 || total <= 0)
@@ -61,6 +63,7 @@ namespace OTSSiteMVC.Controllers
         /// <param name="authorId">authorid</param>
         /// <returns>IEnumerable of articles</returns>
         [HttpGet("Author/{authorId}")]
+        [AllowAnonymous]
         public IActionResult ArticlesByAuthor(Guid authorId)
         {
             //Get all articles by author
@@ -78,6 +81,7 @@ namespace OTSSiteMVC.Controllers
         /// <param name="topic">topic</param>
         /// <returns>IEnumerable of Articles</returns>
         [HttpGet("Topic/{topic}")]
+        [AllowAnonymous]
         public IActionResult ArticleByTopic(string topic)
         {
             //Get all articles of topic that are published
