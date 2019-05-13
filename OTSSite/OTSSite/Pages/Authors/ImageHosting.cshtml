@@ -1,8 +1,25 @@
 ﻿@page
 @model OTSSite.Pages.Authors.ImageHostingModel
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationIdentityUser> _userManager;
 @{
     ViewData["Title"] = "ImageHosting";
+    var user = await _userManager.GetUserAsync(User);
+    var username = user.UserName;
 }
 
-<h1>ImageHosting</h1>
+<h1>Image Upload</h1>
 
+<form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">
+    <input type="hidden" name="UserName" value="@username" />
+    <div class="form-group">
+        <div class="col-md-10">
+            <label>Article File</label>
+            <input type="file" name="ImageFiles" multiple accept="image/jpg,image/jpeg,image/gif,image/png,image/x-png,image/pjpeg"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
+</form>

@@ -51,7 +51,7 @@ namespace OTSSite
 
             services.AddOptions();
             services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
-
+            services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

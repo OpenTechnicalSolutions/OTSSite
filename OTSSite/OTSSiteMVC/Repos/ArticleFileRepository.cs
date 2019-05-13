@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using OTSSite.Configurations;
+using OTSSiteMVC.Configurations;
+using OTSSiteMVC.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace OTSSite.Repositories
+namespace OTSSiteMVC.Repositories
 {
     public class SiteFileRepository
     {
@@ -85,18 +86,22 @@ namespace OTSSite.Repositories
             if (!ConfirmImage(image.ContentType, image.FileName.ToLower()))           //Confirms content type
                 return false;
 
-            var imageSavePath = Path.Combine(_environment.WebRootPath, $"{userName}/");
-            var imageFullPath = Path.Combine(imageSavePath, $"{image.FileName}");
-            //var imageRoot = _fileWriteOptions.Value.ImageRoot;              //Gets image root storage location from appsettings.json
-            /*var imageLocation = imageRoot[imageRoot.Length - 1] == '/' ?    //Create a full file path
-                imageRoot + $"{userName}/{image.FileName}" :
-                imageRoot + $"/{userName}/{image.FileName}";*/
+            var imageRoot = _fileWriteOptions.Value.ImageRoot;              //Gets image root storage location from appsettings.json
+            var imageSavePath = Path.Combine(imageRoot, userName);          //Create a full file path
+            var imageFullPath = Path.Combine(imageSavePath, image.FileName);
             if (!Directory.Exists(imageSavePath))
                 Directory.CreateDirectory(imageSavePath);                                                                            //Write the file to path
             using (FileStream fs = new FileStream(imageFullPath, FileMode.Create, FileAccess.Write))          
                 image.CopyToAsync(fs);
             return true;
         }
+
+        public FileStream GetImage(string username, string filename)
+        {
+            var path = Path.Combine(Path.Combine(_fileWriteOptions.Value.ImageRoot, username), filename);
+            return File.OpenRead(path);
+        }
+
         private bool ConfirmImage(string contentType, string fileName)
         {
             //Supported ContentTypes
