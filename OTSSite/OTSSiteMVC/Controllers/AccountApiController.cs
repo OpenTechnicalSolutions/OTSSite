@@ -37,7 +37,7 @@ namespace OTSSiteMVC.Controllers
         [HttpPost("Register")]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDto)
+        public async Task<IActionResult> Register(CreateUserDto createUserDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

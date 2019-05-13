@@ -9,21 +9,21 @@ namespace OTSSiteMVC.Models
     #region CreationDtos
     public class CreateUserDto
     {
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email Address")]
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[Display(Name = "Email Address")]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         //[RegularExpression("^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]
         [Display(Name = "Username")]
         public string UserName { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Password")]
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         public string Password1 { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Password")]
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         public string Password2 { get; set; }
 
     }

@@ -20,16 +20,17 @@ $("#registerForm").submit(function (e) {
     console.log(token);
     $.post({
         url: "/api/Accounts/Register",
+        //headers: { '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]', form).val()},
         contentType: "application/json",
         dataType: "json",
         data: {
             __RequestVerificationToken: $('input[name="__RequestVerificationToken"]', form).val(),
-            createUserDto: {
+            createUserDto: JSON.stringify({
                 UserName: $('#userName', form).val(),
                 Email: $('#email', form).val(),
                 Password1: $('#password1', form).val(),
                 Password2: $('#password2', form).val()
-            }
+            })
         }
     }).done(function (msg) {
         console.log("SUCCESS/nSUCCESS/nSUCCESS/n" + msg);
