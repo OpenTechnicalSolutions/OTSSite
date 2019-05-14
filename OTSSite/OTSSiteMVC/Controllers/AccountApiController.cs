@@ -38,31 +38,26 @@ namespace OTSSiteMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             //Confirm correct content
             //Return Bad request if not.
             if (createUserDto == null)
-                return BadRequest();
-            if(createUserDto.Password1 != createUserDto.Password2)
                 return BadRequest();
             if (createUserDto.Password1 != createUserDto.Password2)
                 return BadRequest("The password fields must match.");
 
             //Map DTO to AppIdentityUser.
-            var identityUserEntity = Mapper.Map<AppIdentityUser>(createUserDto);     
+            var identityUserEntity = Mapper.Map<AppIdentityUser>(createUserDto);    
             //Create user account.
             var res = await _userManager
                 .CreateAsync(identityUserEntity, createUserDto.Password1);
             //Pull user account for redirect.
-            var userEntityFromDb = _userManager.Users
-                .FirstOrDefault(u => u.UserName == createUserDto.UserName);
+            var userEntityFromDb = Mapper.Map<GetUserProfileDto>(identityUserEntity);
             //If create succeeded redirect to User public data.
             if (res.Succeeded)
                 return CreatedAtRoute(
                     nameof(GetUserProfile), 
-                    new { id = userEntityFromDb.Id }, 
-                    userEntityFromDb.Id);
+                    new { id = identityUserEntity.Id }, 
+                    userEntityFromDb);
             //Throw new exception if failed.
             throw new Exception($"Failed to create user: {res.Errors}");
         }
@@ -118,7 +113,7 @@ namespace OTSSiteMVC.Controllers
                 return Unauthorized("You are not allowed to do this.");
             return Unauthorized("Username or Password is incorrect.");
         }
-
+        [HttpGet("Logout")]
         public async Task<IActionResult> Logout()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -145,28 +140,28 @@ namespace OTSSiteMVC.Controllers
             if (user == null)
                 return NotFound();
             //Get all available roles.
-            var availableRoles = _roleManager.Roles
-                .Select(r => r.Name)
-                .ToList();
+            var availableRoles = _roleManager.Roles.Select(r => r.Name).ToList();
             //Get user current Roles.
             var currentRoles = await _userManager.GetRolesAsync(user);
             //Loop through the roles to confirm it's possible to add each role.
             var addRoles = new List<string>();
-            roles.Roles
-                .ToList()
-                .ForEach(r =>
-                {
-                    if (availableRoles.Contains(r) && !currentRoles.Contains(r))
-                        addRoles.Add(r);
-                });
+            var removeRoles = new List<string>();
+            availableRoles.ToList().ForEach(r =>
+            {
+                if (addRoles.Contains(r) && !currentRoles.Contains(r))
+                    addRoles.Add(r);
+                if (removeRoles.Contains(r) && currentRoles.Contains(r))
+                    removeRoles.Add(r);
+            });
 
-            var res = await _userManager.AddToRolesAsync(user, addRoles);
-            if(res.Succeeded)
+            var addres = await _userManager.AddToRolesAsync(user, addRoles);
+            var remres = await _userManager.RemoveFromRolesAsync(user, removeRoles);
+            if(addres.Succeeded && remres.Succeeded)
                return CreatedAtRoute(
                     nameof(GetUserProfile),
                     new { id = roles.UserId },
                     roles.UserId);
-            throw new Exception("failed to add roles to user.");
+            throw new Exception("Roles failed to be added/removed.");
 
         }
     }
