@@ -8,5 +8,8 @@ namespace OTSSiteMVC.Entities
 {
     public class AppIdentityUser : IdentityUser<Guid>
     {
+        public AppIdentityUser(string username) : base(username) { }
+
+        public AppIdentityUser() : base() { }
     }
 }

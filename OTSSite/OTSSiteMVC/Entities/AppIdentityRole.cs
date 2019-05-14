@@ -8,5 +8,14 @@ namespace OTSSiteMVC.Entities
 {
     public class AppIdentityRole : IdentityRole<Guid>
     {
+        public AppIdentityRole(string role) : base(role)
+        {
+
+        }
+
+        public AppIdentityRole() : base()
+        {
+
+        }
     }
 }
