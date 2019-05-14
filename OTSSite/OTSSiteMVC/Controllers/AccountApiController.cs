@@ -35,9 +35,8 @@ namespace OTSSiteMVC.Controllers
         /// <param name="createUserDto">Dto to create account from</param>
         /// <returns></returns>
         [HttpPost("Register")]
-        [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(CreateUserDto createUserDto)
+        public async Task<IActionResult> Register([FromBody] CreateUserDto createUserDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -99,31 +98,36 @@ namespace OTSSiteMVC.Controllers
         /// </summary>
         /// <param name="loginDto">login Dto</param>
         /// <returns></returns>
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDto loginDto)
         {
-            //Check model state
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
             //Check if loginDto is null
-            if (loginDto == null)
+            if (loginDto.UserName == null || loginDto.Password == null || 
+                loginDto.Password == "" || loginDto.UserName == "")
                 return BadRequest();
-            //Get user that matches username.
-            var userFromEntity = _userManager.Users
-                .FirstOrDefault(u => u.UserName == loginDto.UserName);
             //Attempt the sign in
             var res = await _signInManager
-                .PasswordSignInAsync(loginDto.UserName, loginDto.Password, false, false);
+                .PasswordSignInAsync(loginDto.UserName, loginDto.Password, true, false);
             //Return response from sign in.
             if (res.Succeeded)
                 return Ok();
             else if (res.IsLockedOut)
-                return BadRequest("Account locked.");
+                return Unauthorized("Account locked.");
             else if (res.IsNotAllowed)
-                return BadRequest("Incorrect Username or Password");
-            return BadRequest("Sign in failed.");
+                return Unauthorized("You are not allowed to do this.");
+            return Unauthorized("Username or Password is incorrect.");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized("You must be logged in to do that.");
+            await _signInManager.SignOutAsync();
+            return Ok();
+        }
+
         /// <summary>
         /// Adds roles to a user account.
         /// </summary>

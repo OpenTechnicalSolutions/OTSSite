@@ -31,6 +31,7 @@ namespace OTSSiteMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Nonessential cookie consent.
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -38,16 +39,27 @@ namespace OTSSiteMVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //DB Connection
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<AppIdentityUser, AppIdentityRole>()
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddTransient(typeof(SiteFileRepository));
+
             //Add Configureation Options
             services.AddOptions();
             services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            });
+
+            //Add identity services with roles.
+            services.AddIdentity<AppIdentityUser, AppIdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //Transients, Scopes, and Singletons
+            services.AddTransient(typeof(SiteFileRepository));
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
