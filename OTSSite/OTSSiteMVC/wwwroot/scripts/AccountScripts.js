@@ -11,7 +11,6 @@ $("#loginForm").submit(function (e) {
             Password: $('#password', form).val() //get password value
         })
     }).done(function (msg) {
-        console.log("SUCCESS!/n" + msg);
         window.location.replace("/Home/Index");
     });
 });

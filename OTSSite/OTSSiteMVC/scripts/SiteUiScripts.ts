@@ -1,22 +1,8 @@
-﻿function fillPartial(url: string) {
-   $.get({
-        url: url,
-
-   }).done(function (msg: HTMLElement) {
-       if (msg != null) {
-            var siteOverLay = <HTMLDivElement>document.getElementById('siteOverlay');
-            siteOverLay.innerHTML += msg;
-            siteOverLay.hidden = false;
-        }
+﻿$('#formLogout').submit(function (e) {
+    e.preventDefault();
+    $.post({
+        url: 'api/Accounts/Logout'
+    }).done(function () {
+        window.location.reload();
     })
-}
-
-$('#partialLogin').click( function (e) {
-    e.preventDefault();
-    fillPartial('/Account/Login');
-});
-
-$(document).on('click','#partialRegister', function (e) {
-    e.preventDefault();
-    fillPartial('/Account/Register');
 });

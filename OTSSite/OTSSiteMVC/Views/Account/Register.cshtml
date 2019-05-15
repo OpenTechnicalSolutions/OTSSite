@@ -5,7 +5,7 @@
 
 <h1>Register</h1>
 
-<form id="registerForm">
+<form id="registerForm" method="post">
     <div class="form-group">
         <label asp-for="UserName"></label>
         <input asp-for="UserName" id="userName" type="text" class="form-control"/>
@@ -28,6 +28,3 @@
         <button type="submit" id="regSubmitButton">Register</button>
     </div>
 </form>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/scripts/AccountScripts.js">
-</script>
