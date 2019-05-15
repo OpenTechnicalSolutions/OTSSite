@@ -39,6 +39,7 @@ namespace OTSSiteMVC.Controllers
                 ModelState.AddModelError("","Password fields must match.");
 
             var userEntity = Mapper.Map<AppIdentityUser>(createUserDto);
+            userEntity.JoinDateTime = DateTime.Now;
             var res = await _userManager.CreateAsync(userEntity, createUserDto.Password1);
             if (res.Succeeded)
                 return RedirectToAction(nameof(Login));
@@ -82,6 +83,17 @@ namespace OTSSiteMVC.Controllers
         {
            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("{username}")]
+        public async Task<IActionResult> Profile(string username)
+        {
+            var userEntity = _userManager.Users.FirstOrDefault(u => u.UserName == username);
+            if (userEntity == null)
+                return NotFound();
+            var userProfileDto = Mapper.Map<GetUserProfileDto>(userEntity);
+            userProfileDto.Roles = await _userManager.GetRolesAsync(userEntity) as string[];
+            return View(userProfileDto);
         }
     }
 }

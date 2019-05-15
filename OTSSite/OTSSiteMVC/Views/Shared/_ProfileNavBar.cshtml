@@ -1,0 +1,31 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<OTSSiteMVC.Entities.AppIdentityUser> _userManager
+@inject Microsoft.AspNetCore.Identity.RoleManager<OTSSiteMVC.Entities.AppIdentityRole> _roleManager
+
+@{ 
+    var user = await _userManager.GetUserAsync(User);
+    var currentUserRoles = await _userManager.GetRolesAsync(user);
+}
+
+
+<div class="navbar nav">
+    <ul>
+        @if (currentUserRoles.Contains("author"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark">Author Dashboard</a> 
+            </li>
+        }
+        @if(currentUserRoles.Contains("editor"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark">Editor Dashboard</a>
+            </li>
+        }
+        @if(currentUserRoles.Contains("administrator"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark">Admin Dashboard</a>
+            </li>
+        }
+    </ul>
+</div>
