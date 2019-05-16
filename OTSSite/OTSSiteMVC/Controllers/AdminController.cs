@@ -40,7 +40,6 @@ namespace OTSSiteMVC.Controllers
         }
         [Authorize(Roles = "administrator")]
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserConfig(Guid id)
         {
             var userEntity = _userManager.Users.FirstOrDefault(u => u.Id == id);
@@ -48,6 +47,8 @@ namespace OTSSiteMVC.Controllers
                 return NotFound();
             var userConfigDto = Mapper.Map<UserConfigDto>(userEntity);
             userConfigDto.AssignedRoles = await _userManager.GetRolesAsync(userEntity) as string[];
+            if (userConfigDto.AssignedRoles == null)
+                userConfigDto.AssignedRoles = new string[0];
             userConfigDto.UnAssignedRoles = _roleManager.Roles
                 .Select(r => r.Name)
                 .Where(rn => !userConfigDto.AssignedRoles.Contains(rn))
