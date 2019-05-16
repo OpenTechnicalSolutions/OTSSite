@@ -9,7 +9,7 @@
 <div id="usernmaeHeader">
     <h2>@Model.UserName</h2>
 </div>
-@if (currentUser.UserName == Model.UserName)
+@if (currentUser != null && currentUser.UserName == Model.UserName)
 {
 <partial name="_ProfileNavBar" />
 }

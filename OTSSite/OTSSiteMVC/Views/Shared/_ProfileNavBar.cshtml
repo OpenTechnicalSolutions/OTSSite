@@ -3,29 +3,29 @@
 
 @{ 
     var user = await _userManager.GetUserAsync(User);
-    var currentUserRoles = await _userManager.GetRolesAsync(user);
+    var currentUserRoles = user == null ? new string[0] : await _userManager.GetRolesAsync(user);
 }
 
 
-<div class="navbar nav">
-    <ul>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <ul class="navbar-nav">
         @if (currentUserRoles.Contains("author"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark">Author Dashboard</a> 
+                <a class="nav-link text-dark">Author Dashboard</a>
             </li>
         }
-        @if(currentUserRoles.Contains("editor"))
+        @if (currentUserRoles.Contains("editor"))
         {
             <li class="nav-item">
                 <a class="nav-link text-dark">Editor Dashboard</a>
             </li>
         }
-        @if(currentUserRoles.Contains("administrator"))
+        @if (currentUserRoles.Contains("administrator"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark">Admin Dashboard</a>
+                <a asp-controller="Admin" asp-action="Index" class="nav-link text-dark">Admin Dashboard</a>
             </li>
         }
     </ul>
-</div>
+</nav>

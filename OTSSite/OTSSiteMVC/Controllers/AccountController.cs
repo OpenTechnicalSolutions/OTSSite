@@ -85,7 +85,7 @@ namespace OTSSiteMVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("{username}")]
+        [HttpGet]
         public async Task<IActionResult> Profile(string username)
         {
             var userEntity = _userManager.Users.FirstOrDefault(u => u.UserName == username);

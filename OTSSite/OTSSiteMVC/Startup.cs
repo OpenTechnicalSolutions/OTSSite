@@ -85,7 +85,9 @@ namespace OTSSiteMVC
                 cfg.CreateMap<Models.CreateArticleDto, Entities.Article>();
 
                 //Entities to DTO's
-                cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>();
+                cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Entities.AppIdentityUser, Models.UserConfigDto>();
                 cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
                 cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>();
             });
