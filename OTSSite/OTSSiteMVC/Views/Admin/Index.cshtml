@@ -1,0 +1,17 @@
+﻿@model System.Collections.Generic.IEnumerable<OTSSiteMVC.Models.GetUserProfileDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach(var user in Model)
+{
+    <a asp-action="UserConfig" asp-route-id="@user.UserId">
+        <div class="card">
+            <h5 class="card-header">@user.UserName</h5>
+            <div class="card-body">
+                <img class="card-img" />
+            </div>
+        </div>
+    </a>
+}
+

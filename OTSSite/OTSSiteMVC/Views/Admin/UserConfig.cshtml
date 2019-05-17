@@ -1,0 +1,54 @@
+﻿@model OTSSiteMVC.Models.UserConfigDto
+@{
+    ViewData["Title"] = "UserConfig";
+    var base64 = Convert.ToBase64String(Model.ProfileImage.Image);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+
+<h1>UserConfig</h1>
+
+<div class="card">
+    <div class="card-header">
+        @Model.UserName;
+    </div>
+    <img class="card-img-top" src="@imgSrc" />
+    <div class="card-body">
+        <table>
+            <thead>
+                <tr>Roles</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @foreach (var r in Model.AssignedRoles)
+                    {
+                        <td>@r</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.DelimitedAssignedRoles" id="assignedRoles" />
+        <input type="hidden" asp-for="@Model.DelimitedUnAssignedRoles" id="unassignedRoles"/>
+        <select asp-for="@Model.AssignedRoles" class="form-control" size="5">
+            @foreach(var r in Model.AssignedRoles)
+            {
+                <option value="@r">@r</option>
+            }
+        </select>
+        <button id="AssignedRolesButton">&lt;&lt;</button>
+        <button id="UnAssignedRolesButton">&gt;&gt;</button>
+        <select asp-for="@Model.UnAssignedRoles" class="form-control" size="5">
+            @foreach (var r in Model.UnAssignedRoles)
+            {
+                <option value="@r">@r</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input asp-for="@Model.Lockout" class="form-control"/>
+    </div>
+    <button type="submit">Submit</button>
+</form>

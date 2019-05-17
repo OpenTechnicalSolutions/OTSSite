@@ -1,0 +1,29 @@
+﻿@model OTSSiteMVC.Models.GetUserProfileDto
+@using UsefulExtensionMethods.WebExtensions
+@inject Microsoft.AspNetCore.Identity.UserManager<OTSSiteMVC.Entities.AppIdentityUser> _userManager;
+@{
+    ViewData["Title"] = "Profile";
+    var currentUser = await _userManager.GetUserAsync(User);
+}
+
+<div id="usernmaeHeader">
+    <h2>@Model.UserName</h2>
+</div>
+@if (currentUser != null && currentUser.UserName == Model.UserName)
+{
+<partial name="_ProfileNavBar" />
+}
+<div>
+    <div>
+        <div id="profileImage"></div>
+    </div>
+    <div>
+        <div id="joinDate">Join Date: @Model.JoinDateTime.ToHtmlDate()</div>
+        <div id="websiteLink"><a href="@Model.Website">Website</a></div>
+        <div>
+            <div>Description</div>
+            <div>@Model.Description</div>
+        </div>
+    </div>
+</div>
+

@@ -5,29 +5,27 @@
 
 <h1>Register</h1>
 
-<form id="registerForm">
+<form id="registerForm" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="UserName"></label>
-        <input asp-for="UserName" id="userName" type="text" class="form-control"/>
+        <input asp-for="UserName" id="userName" type="text" class="form-control" />
         <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" id="email" type="text" class="form-control"/>
+        <input asp-for="Email" id="email" type="text" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password1"></label>
-        <input asp-for="Password1" id="password1" type="password" class="form-control"/>
+        <input asp-for="Password1" id="password1" type="password" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Password2"></label>
-        <input asp-for="Password2" id="password2" type="password" class="form-control"/>
+        <input asp-for="Password2" id="password2" type="password" class="form-control" />
     </div>
     <div class="form-group">
         <button type="submit" id="regSubmitButton">Register</button>
     </div>
 </form>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/scripts/AccountScripts.js">
-</script>
