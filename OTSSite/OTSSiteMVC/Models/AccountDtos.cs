@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OTSSiteMVC.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -49,11 +50,16 @@ namespace OTSSiteMVC.Models
         public string Password { get; set; }
     }
 
-    public class ModifyUserRolesDto
+    /*public class ModifyUserRolesDto
     {
         public Guid UserId { get; set; }
+        public string UserName { get; set; }
         public string[] AddRoles { get; set; }
         public string[] RemoveRoles { get; set; }
-    }
+        public ImageData ProfileImage { get; set; }
+        public string DelimitedAssignedRoles { get; set; }
+        public string DelimitedUnAssignedRoles { get; set; }
+        public bool Lockout { get; set; }
+    }*/
 }
 

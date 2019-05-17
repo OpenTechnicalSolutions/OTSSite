@@ -16,8 +16,11 @@ namespace OTSSiteMVC.Entities
         [Required]
         public string UserName { get; set; }
         [Required]
+        [StringLength(255)]
         public string FileName { get; set; }
         [Required]
+        [StringLength(100)]
         public string ContentType { get; set; }
+        public byte[] Image { get; set; }
     }
 }
