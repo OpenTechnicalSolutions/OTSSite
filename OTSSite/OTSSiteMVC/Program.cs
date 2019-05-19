@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OTSSiteMVC.Data;
 using OTSSiteMVC.Entities;
 
 namespace OTSSiteMVC
@@ -26,7 +27,9 @@ namespace OTSSiteMVC
                 {
                     var userManager = services.GetRequiredService<UserManager<AppIdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<AppIdentityRole>>();
-                    DefaultAccountSeeds.Seed(userManager, roleManager);
+                    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+                    var env = services.GetRequiredService<IHostingEnvironment>();
+                    DefaultAccountSeeds.Seed(userManager, roleManager, dbContext, env);
                 }
                 catch (Exception e)
                 {

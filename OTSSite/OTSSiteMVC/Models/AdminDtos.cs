@@ -11,10 +11,7 @@ namespace OTSSiteMVC.Models
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public ImageData ProfileImage { get; set; }
-        public string DelimitedAssignedRoles { get; set; }
-        public string DelimitedUnAssignedRoles { get; set; }
         public bool Lockout { get; set; }
-        public string[] AssignedRoles { get; set; }
-        public string[] UnAssignedRoles { get; set; }
+        public Dictionary<string, bool> Roles { get; set; }
     }
 }

@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using OTSSiteMVC.Entities;
 using OTSSiteMVC.Configurations;
 using OTSSiteMVC.Repositories;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace OTSSiteMVC
 {
@@ -87,7 +89,8 @@ namespace OTSSiteMVC
                 //Entities to DTO's
                 cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>()
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-                cfg.CreateMap<Entities.AppIdentityUser, Models.UserConfigDto>();
+                cfg.CreateMap<Entities.AppIdentityUser, Models.UserConfigDto>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
                 cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>();
             });
@@ -95,6 +98,12 @@ namespace OTSSiteMVC
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.WebRootPath, "Images")),
+                RequestPath = new PathString("/Images")
+            });
             app.UseCookiePolicy();
             app.UseAuthentication();
 

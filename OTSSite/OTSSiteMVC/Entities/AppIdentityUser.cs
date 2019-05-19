@@ -17,7 +17,6 @@ namespace OTSSiteMVC.Entities
         public Guid ImageDataId { get; set; }
 
         public AppIdentityUser(string username) : base(username) { }
-
         public AppIdentityUser() : base() { }
     }
 }

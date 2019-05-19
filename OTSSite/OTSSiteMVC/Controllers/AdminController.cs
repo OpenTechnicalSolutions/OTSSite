@@ -46,14 +46,45 @@ namespace OTSSiteMVC.Controllers
             if (userEntity == null)
                 return NotFound();
             var userConfigDto = Mapper.Map<UserConfigDto>(userEntity);
-            userConfigDto.AssignedRoles = await _userManager.GetRolesAsync(userEntity) as string[];
-            if (userConfigDto.AssignedRoles == null)
-                userConfigDto.AssignedRoles = new string[0];
-            userConfigDto.UnAssignedRoles = _roleManager.Roles
-                .Select(r => r.Name)
-                .Where(rn => !userConfigDto.AssignedRoles.Contains(rn))
-                .ToArray(); 
+            userConfigDto.Roles = new Dictionary<string, bool>();
+            var assignedRoles = (await _userManager.GetRolesAsync(userEntity)).ToArray();
+            var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+            allRoles.ForEach(r =>
+            {
+                if (assignedRoles.Contains(r))
+                    userConfigDto.Roles.Add(r, true);
+                else
+                    userConfigDto.Roles.Add(r, false);
+            });
+
             return View(userConfigDto);
+        }
+        [HttpPost]
+        [Authorize(Roles ="administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UserConfig([FromForm] UserConfigDto userConfigDto)
+        {
+            var user = _userManager.Users.FirstOrDefault(u => u.Id == userConfigDto.UserId);
+            if (user == null)
+                return NotFound();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var allRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+            var addRoles = new List<string>();
+            var remRoles = new List<string>();
+            allRoles.ForEach(r =>
+            {
+                if (userConfigDto.Roles[r] && !userRoles.Contains(r))
+                    addRoles.Add(r);
+                if (!userConfigDto.Roles[r] && userRoles.Contains(r))
+                    remRoles.Add(r);
+            });
+            var res1 = await _userManager.AddToRolesAsync(user, addRoles);
+            var res2 = await _userManager.RemoveFromRolesAsync(user, remRoles);
+            if (!res1.Succeeded && !res2.Succeeded)
+                throw new Exception("Roles failed to be added or removed.");
+            user.LockoutEnabled = userConfigDto.Lockout;
+            return RedirectToAction("Index");
         }
     }
 }

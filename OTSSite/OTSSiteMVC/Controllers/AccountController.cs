@@ -61,7 +61,7 @@ namespace OTSSiteMVC.Controllers
             if (!ModelState.IsValid)
                 return View(loginDto);
 
-            var res = await _signInManager.PasswordSignInAsync(loginDto.UserName, loginDto.Password, false, false);
+            var res = await _signInManager.PasswordSignInAsync(loginDto.UserName, loginDto.Password, loginDto.RememberMe, false);
             if (res.Succeeded)
                 return RedirectToAction("Index", "Home");
             else if (res.IsLockedOut)

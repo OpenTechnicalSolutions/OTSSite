@@ -48,18 +48,8 @@ namespace OTSSiteMVC.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Display(Name = "Remember Me")]
+        public bool RememberMe { get; set; }
     }
-
-    /*public class ModifyUserRolesDto
-    {
-        public Guid UserId { get; set; }
-        public string UserName { get; set; }
-        public string[] AddRoles { get; set; }
-        public string[] RemoveRoles { get; set; }
-        public ImageData ProfileImage { get; set; }
-        public string DelimitedAssignedRoles { get; set; }
-        public string DelimitedUnAssignedRoles { get; set; }
-        public bool Lockout { get; set; }
-    }*/
 }
 
