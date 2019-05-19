@@ -22,7 +22,6 @@ namespace OTSSiteMVC
             "author",
             "user"
         };
-
         private static AppIdentityUser SeedAccountData(
             UserManager<AppIdentityUser> _userManager,
             RoleManager<AppIdentityRole> _roleManager)
@@ -68,7 +67,6 @@ namespace OTSSiteMVC
             dbContext.SaveChanges();
             return dbContext.Images.FirstOrDefault(i => i.FileName == "DefaultProfileImage.png" && i.UserName == "Default");
         }
-
         public static void Seed(
             UserManager<AppIdentityUser> userManager,
             RoleManager<AppIdentityRole> rolesManager,

@@ -83,7 +83,8 @@ namespace OTSSiteMVC
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 //DTO's to Entities
-                cfg.CreateMap<Models.CreateUserDto, Entities.AppIdentityUser>();
+                cfg.CreateMap<Models.CreateUserDto, Entities.AppIdentityUser>()
+                    .ForMember(dest => dest.JoinDateTime, opt => opt.MapFrom(src => DateTime.Now));
                 cfg.CreateMap<Models.CreateArticleDto, Entities.Article>();
 
                 //Entities to DTO's
