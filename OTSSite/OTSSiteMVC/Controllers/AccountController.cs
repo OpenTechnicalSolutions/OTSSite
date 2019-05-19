@@ -130,7 +130,7 @@ namespace OTSSiteMVC.Controllers
                 return NotFound();
             //Conver to DTO
             var userProfileDto = Mapper.Map<GetUserProfileDto>(userEntity);
-            //Add roles
+            //Add roles and profile image
             userProfileDto.Roles = await _userManager.GetRolesAsync(userEntity) as string[];
             userProfileDto.ProfileImage = _dbContext.Images.FirstOrDefault(i => i.Id == userEntity.ImageDataId);
             return View(userProfileDto);
