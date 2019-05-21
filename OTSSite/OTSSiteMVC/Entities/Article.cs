@@ -21,7 +21,7 @@ namespace OTSSiteMVC.Entities
         [Required]
         public string Topic { get; set; }
         [Required]
-        public string AuthorUserName { get; set; }
+        public string UserName { get; set; }
         [ForeignKey("UserId")]
         [Required]
         public Guid AuthorId { get; set; }
