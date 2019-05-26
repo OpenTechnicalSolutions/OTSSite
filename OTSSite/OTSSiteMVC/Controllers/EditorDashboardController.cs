@@ -34,7 +34,9 @@ namespace OTSSiteMVC.Controllers
         [Authorize(Roles = "editor")]
         public IActionResult Index()
         {
-            var pendingArticles = _dbContext.Articles.Where(a => a.Status == Status.Pending);
+            var pendingArticles = _dbContext.Articles
+                .Where(a => a.Status == Status.Pending)
+                .OrderBy(a => a.SubmitDate);
             var articleInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(pendingArticles);
             return View(articleInfoDto);
         }
@@ -45,7 +47,9 @@ namespace OTSSiteMVC.Controllers
             if (!Enum.IsDefined(typeof(Status), status))
                 return BadRequest();
 
-            var articleEntities = _dbContext.Articles.Where(a => a.Status == (Status)status);
+            var articleEntities = _dbContext.Articles
+                .Where(a => a.Status == (Status)status)
+                .OrderBy(a => a.SubmitDate);
             var articleInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
             return View(articleInfoDto);
         }
@@ -76,7 +80,7 @@ namespace OTSSiteMVC.Controllers
             articleEntity.Status = (Status)status;
             if (_dbContext.SaveChanges() > 0)
                 throw new Exception("Unable to save status changes.");
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
