@@ -15,9 +15,7 @@ namespace OTSSiteMVC.Entities
         public DateTime JoinDateTime { get; set; }
         [ForeignKey("ImageDataId")]
         public Guid ImageDataId { get; set; }
-
         public AppIdentityUser(string username) : base(username) { }
-
         public AppIdentityUser() : base() { }
     }
 }

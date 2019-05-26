@@ -21,7 +21,7 @@ namespace OTSSiteMVC.Entities
         [Required]
         public string Topic { get; set; }
         [Required]
-        public string AuthorUserName { get; set; }
+        public string UserName { get; set; }
         [ForeignKey("UserId")]
         [Required]
         public Guid AuthorId { get; set; }
@@ -33,5 +33,7 @@ namespace OTSSiteMVC.Entities
         [Required]
         public string ArticlePath { get; set; }
         public Status Status { get; set; }
+        [Required]
+        public DateTime SubmitDate { get; set; }
     }
 }

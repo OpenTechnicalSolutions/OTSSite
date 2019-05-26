@@ -1,15 +1,19 @@
 ﻿@model OTSSiteMVC.Models.UserConfigDto
 @{
     ViewData["Title"] = "UserConfig";
-    var base64 = Convert.ToBase64String(Model.ProfileImage.Image);
-    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    string imgSrc = string.Empty;
+    if (Model.ProfileImage != null)
+    {
+        var base64 = Convert.ToBase64String(Model.ProfileImage.Image);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
 }
 
 <h1>UserConfig</h1>
 
 <div class="card">
     <div class="card-header">
-        @Model.UserName;
+        @Model.UserName
     </div>
     <img class="card-img-top" src="@imgSrc" />
     <div class="card-body">
@@ -19,36 +23,60 @@
             </thead>
             <tbody>
                 <tr>
-                    @foreach (var r in Model.AssignedRoles)
+                    @foreach (var r in Model.Roles)
                     {
-                        <td>@r</td>
+                        if (r.Value == true)
+                        {
+                        <td>@r.Key</td>
+                        }
                     }
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
-<form method="post">
+<form method="post" asp-controller="Admin" asp-action="UserConfig">
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="UserName" />
     <div class="form-group">
-        <input type="hidden" asp-for="@Model.DelimitedAssignedRoles" id="assignedRoles" />
-        <input type="hidden" asp-for="@Model.DelimitedUnAssignedRoles" id="unassignedRoles"/>
-        <select asp-for="@Model.AssignedRoles" class="form-control" size="5">
-            @foreach(var r in Model.AssignedRoles)
-            {
-                <option value="@r">@r</option>
-            }
-        </select>
-        <button id="AssignedRolesButton">&lt;&lt;</button>
-        <button id="UnAssignedRolesButton">&gt;&gt;</button>
-        <select asp-for="@Model.UnAssignedRoles" class="form-control" size="5">
-            @foreach (var r in Model.UnAssignedRoles)
-            {
-                <option value="@r">@r</option>
-            }
-        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Roles</th>
+                    <th>Add/Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in @Model.Roles)
+                {
+                    <tr>
+                        <td>@r.Key</td>
+                        <td>
+                            @if (r.Value)
+                            {
+                                <input type="radio" asp-for="Roles[r.Key]" value="@true" checked /><span>Add</span>
+                                <input type="radio" asp-for="Roles[r.Key]" value="@false" /><span>Remove</span>
+                            }
+                            else
+                            {
+                                <input type="radio" asp-for="Roles[r.Key]" value="@true" /><span>Add</span>
+                                <input type="radio" asp-for="Roles[r.Key]" value="@false" checked/><span>Remove</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
     <div class="form-group">
-        <input asp-for="@Model.Lockout" class="form-control"/>
+        @if (Model.Lockout)
+        {
+            <input asp-for="@Model.Lockout" class="form-control" checked />
+        }
+        else
+        {
+            <input asp-for="@Model.Lockout" class="form-control" />
+        }
     </div>
     <button type="submit">Submit</button>
 </form>

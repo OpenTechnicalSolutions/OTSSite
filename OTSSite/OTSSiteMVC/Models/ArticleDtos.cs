@@ -25,6 +25,7 @@ namespace OTSSiteMVC.Models
         public string ArticleId { get; set; }
         public string AuthorUserName { get; set; }
         public string PublishDate { get; set; }
+        public string SubmitDate { get; set; }
     }
 
     public class CreateArticleDto
@@ -41,5 +42,6 @@ namespace OTSSiteMVC.Models
         public string Topic { get; set; }
         [Required]
         public IFormFile ArticleFile { get; set; }
+        public DateTime SubmitDate { get; set; } = DateTime.Now;
     }
 }

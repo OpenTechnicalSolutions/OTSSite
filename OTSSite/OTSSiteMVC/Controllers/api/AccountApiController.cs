@@ -131,7 +131,7 @@ namespace OTSSiteMVC.Controllers
         [HttpPost("AddRoles")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> AddRoles([FromBody] ModifyUserRolesDto roles)
+        public async Task<IActionResult> AddRoles([FromBody] UserConfigDto roles)
         {
             ///Get user to add roles to.
             var user = _userManager.Users
