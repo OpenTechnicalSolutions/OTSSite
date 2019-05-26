@@ -2,71 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using Ganss.XSS;
+using Markdig.Parsers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OTSSiteMVC.Data;
 using OTSSiteMVC.Entities;
 using OTSSiteMVC.Models;
 using OTSSiteMVC.Repositories;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Markdig.Parsers;
-using Ganss.XSS;
 
 namespace OTSSiteMVC.Controllers
 {
-    public class AuthorDashboardController : Controller
+    public class ArticleController : Controller
     {
-        private readonly SiteFileRepository _fileRepository;
         private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly SiteFileRepository _fileRepository;
 
-        public AuthorDashboardController(
-            SiteFileRepository fileRepository,
+        public ArticleController(
             ApplicationDbContext dbContext,
-            UserManager<AppIdentityUser> userManager)
+            SiteFileRepository fileRepository)
         {
-            _fileRepository = fileRepository;
             _dbContext = dbContext;
-            _userManager = userManager;
+            _fileRepository = fileRepository;
         }
-        [Authorize(Roles = "author, editor")]
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Articles()
         {
-            var user = await _userManager.GetUserAsync(User);
-            var userArticles = _dbContext.Articles.Where(a => a.AuthorId == user.Id);
-            var articleInfoDtos = Mapper.Map<IEnumerable<ArticleInfoDto>>(userArticles);
-
-            return View(articleInfoDtos);
+            var articleEntities = _dbContext.Articles
+                .Where(a => a.Status == Status.Published)
+                .OrderBy(a => a.PublishDate);
+            var articleInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
+            return View(articleInfoDto);
         }
-        [HttpGet]
-        [Authorize(Roles = "author, editor")]
-        public async Task<IActionResult> PreviewArticle(Guid id)
+        public async Task<IActionResult> Article(Guid id)
         {
             var htmlSanitizer = new HtmlSanitizer();
-            var articleInfo = _dbContext.Articles.FirstOrDefault(a => a.Id == id);
-            var articleText = await _fileRepository.GetArticle(articleInfo.ArticlePath);
+            var articleEntity = _dbContext.Articles
+                .FirstOrDefault(a => a.Id == id);
+            if (articleEntity == null)
+                return NotFound();
+            else if (articleEntity.Status != Status.Published)
+                return NotFound();
+            var articleDto = Mapper.Map<GetArticleDto>(articleEntity);
+            var articleText = await _fileRepository.GetArticle(articleEntity.ArticlePath);
             articleText = MarkdownParser.Parse(articleText).ToString();
-            articleText = htmlSanitizer.SanitizeDocument(articleText);
-            return View(articleText);
-        }
-
-        [Authorize(Roles = "author, editor")]
-        [HttpGet]
-        public IActionResult SubmitArticle()
-        {
-            return View();
-        }
-        public async Task<IActionResult> SubmitArticle([FromBody] CreateArticleDto createArticleDto)
-        {
-            var articleEntity = Mapper.Map<Article>(createArticleDto);
-            articleEntity.ArticlePath = await _fileRepository.SaveArticle(createArticleDto.ArticleFile, createArticleDto.UserName);
-            articleEntity.Status = Status.Pending;
-            _dbContext.Articles.Add(articleEntity);
-            if (_dbContext.SaveChanges() >= 0)
-                return RedirectToAction("Profile", "Account", createArticleDto.UserName);
-            throw new Exception("Failed to save article");
+            articleDto.ArticleText = htmlSanitizer.SanitizeDocument(articleText);
+            return View(articleDto);
         }
     }
 }

@@ -33,5 +33,7 @@ namespace OTSSiteMVC.Entities
         [Required]
         public string ArticlePath { get; set; }
         public Status Status { get; set; }
+        [Required]
+        public DateTime SubmitDate { get; set; }
     }
 }
