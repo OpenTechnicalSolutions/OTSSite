@@ -47,6 +47,8 @@ namespace OTSSiteMVC.Controllers
         [Authorize(Roles = "author, editor")]
         public async Task<IActionResult> Index(int status)
         {
+            if (!Enum.IsDefined(typeof(Status), status))
+                return BadRequest();
             var userEntity = await _userManager.GetUserAsync(User);
             var userArticle = _dbContext.Articles
                 .Where(a => a.AuthorId == userEntity.Id && a.Status == (Status)status)
@@ -63,6 +65,8 @@ namespace OTSSiteMVC.Controllers
             var htmlSanitizer = new HtmlSanitizer();
             var userEntity = await _userManager.GetUserAsync(User);
             var articleInfo = _dbContext.Articles.FirstOrDefault(a => a.Id == id && a.AuthorId == userEntity.Id);
+            if (articleInfo == null)
+                return NotFound();
             var articleText = await _fileRepository.GetArticle(articleInfo.ArticlePath);
             articleText = MarkdownParser.Parse(articleText).ToString();
             articleText = htmlSanitizer.SanitizeDocument(articleText);

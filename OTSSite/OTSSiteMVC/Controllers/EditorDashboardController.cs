@@ -40,6 +40,17 @@ namespace OTSSiteMVC.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "editor")]
+        public IActionResult Index(int status)
+        {
+            if (!Enum.IsDefined(typeof(Status), status))
+                return BadRequest();
+
+            var articleEntities = _dbContext.Articles.Where(a => a.Status == (Status)status);
+            var articleInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
+            return View(articleInfoDto);
+        }
+        [HttpGet]
+        [Authorize(Roles = "editor")]
         public async Task<IActionResult> PreviewArticle(Guid id)
         {
             var htmlSanitizer = new HtmlSanitizer();
