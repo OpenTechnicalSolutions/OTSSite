@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OTSSiteMVC.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,10 @@ namespace OTSSiteMVC.Models
 {
     public class GetArticleDto
     {
+        public Guid ArticleId { get; set; }
         public string Title { get; set; }
         public string Topic { get; set; }
-        public string AuthorUserName { get; set; }
-        public string AuthorId { get; set; }
+        public Guid AuthorId { get; set; }
         public string PublishDate { get; set; }
         public string ArticleText { get; set; }
     }
@@ -26,6 +27,7 @@ namespace OTSSiteMVC.Models
         public string AuthorUserName { get; set; }
         public string PublishDate { get; set; }
         public string SubmitDate { get; set; }
+        public Status Status { get; set; }
     }
 
     public class CreateArticleDto

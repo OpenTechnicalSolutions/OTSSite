@@ -18,6 +18,7 @@ using OTSSiteMVC.Configurations;
 using OTSSiteMVC.Repositories;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using UsefulExtensionMethods.IdentityExtensions;
 
 namespace OTSSiteMVC
 {
@@ -92,7 +93,8 @@ namespace OTSSiteMVC
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.AppIdentityUser, Models.UserConfigDto>()
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-                cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
+                cfg.CreateMap<Entities.Article, Models.GetArticleDto>()
+                    .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>();
             });
 

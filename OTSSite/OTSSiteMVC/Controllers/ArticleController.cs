@@ -26,28 +26,41 @@ namespace OTSSiteMVC.Controllers
             _dbContext = dbContext;
             _fileRepository = fileRepository;
         }
+        /// <summary>
+        /// Get articles that are published
+        /// </summary>
+        /// <returns>View with list of articles that are published</returns>
         public IActionResult Articles()
         {
-            var articleEntities = _dbContext.Articles
-                .Where(a => a.Status == Status.Published)
-                .OrderBy(a => a.PublishDate);
-            var articleInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
-            return View(articleInfoDto);
+            var articleEntities = _dbContext.Articles                       //Get all articles
+                .Where(a => a.Status == Status.Published)                   //that are published
+                .OrderBy(a => a.PublishDate);                               //and order by publishdate
+            var articleInfoDto =                                            //convert to list of article info dto
+                Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
+            return View(articleInfoDto);                                    //return view with list of article info dto
         }
+        /// <summary>
+        /// Display a published article
+        /// </summary>
+        /// <param name="id">id of article</param>
+        /// <returns>View of article</returns>
         public async Task<IActionResult> Article(Guid id)
         {
-            var htmlSanitizer = new HtmlSanitizer();
-            var articleEntity = _dbContext.Articles
-                .FirstOrDefault(a => a.Id == id);
-            if (articleEntity == null)
+            var htmlSanitizer = new HtmlSanitizer();                    //HTML sanitizer
+            var articleEntity = _dbContext.Articles                     //Get article
+                .FirstOrDefault(a => a.Id == id);                       
+            if (articleEntity == null)                                  //if null return NotFound
                 return NotFound();
-            else if (articleEntity.Status != Status.Published)
+            else if (articleEntity.Status != Status.Published)          //If not published return NotFound
                 return NotFound();
-            var articleDto = Mapper.Map<GetArticleDto>(articleEntity);
-            var articleText = await _fileRepository.GetArticle(articleEntity.ArticlePath);
-            articleText = MarkdownParser.Parse(articleText).ToString();
-            articleDto.ArticleText = htmlSanitizer.SanitizeDocument(articleText);
-            return View(articleDto);
+            var articleDto =                                            //Map to Dto
+                Mapper.Map<GetArticleDto>(articleEntity);
+            var articleText = await _fileRepository                     //Load article file
+                .GetArticle(articleEntity.ArticlePath);                 
+            articleText = MarkdownParser.Parse(articleText).ToString(); //Parse MarkDown
+            articleDto.ArticleText = htmlSanitizer                      //Sanatize and add to DTO
+                .SanitizeDocument(articleText);
+            return View(articleDto);                                    //return view of DTO
         }
     }
 }

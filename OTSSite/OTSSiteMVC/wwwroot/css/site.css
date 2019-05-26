@@ -68,3 +68,11 @@ body {
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
 }
+
+/*USER ADDED CODE
+--------------------------------*/
+
+.article-info-box {
+    border: solid 3px #1C6EA4;
+    box-shadow: 2px 2px 7px 1px rgba(0,0,0,0);
+}
