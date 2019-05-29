@@ -1,17 +1,18 @@
 ﻿@model IEnumerable<ArticleInfoDto>
-
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
 }
 
 @foreach (var a in Model)
 {
-    <a asp-action="Article" asp-controller="Article" asp-route-id="@a.ArticleId">
+    <a asp-action="PreviewArticle" asp-route-id="@a.ArticleId">
         <div class="article-info-box">
             <div class="article-info-header">@a.Title</div>
             <div>@a.AuthorUserName</div>
             <div>@a.Topic</div>
+            <div>@a.Status.ToString()</div>
         </div>
     </a>
     <br />
 }
+

@@ -1,0 +1,28 @@
+﻿@model  CreateArticleDto
+@inject  Microsoft.AspNetCore.Identity.UserManager<OTSSiteMVC.Entities.AppIdentityUser> _userManager
+@{
+    ViewData["Title"] = "SubmitArticle";
+    var userEntity = await _userManager.GetUserAsync(User);
+    var username = userEntity.UserName;
+    var userId = userEntity.Id;
+}
+
+<h1>SubmitArticle</h1>
+
+<form method="post" asp-action="SubmitArticle">
+    <input type="hidden" asp-for="AuthorId" value="@userId" />
+    <input type="hidden" asp-for="UserName" value="@username" />
+    <div class="form-group">
+        <label asp-for="Title" />
+        <input type="text" asp-for="Title" class="form-control"/>
+    </div>
+    <div class="form-group">
+       <label asp-for="Topic" />
+        <input type="text" asp-for="Topic" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ArticleFile" />
+        <input type="file" asp-for="ArticleFile" class="form-control" />
+    </div>
+    <button type="submit">Submit</button>
+</form>

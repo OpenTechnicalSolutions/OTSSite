@@ -33,4 +33,9 @@
     <TypeScriptCompile Include="scripts\SiteUiScripts.ts" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+  </ItemGroup>
+
 </Project>

@@ -62,5 +62,27 @@ namespace OTSSiteMVC.Controllers
                 .SanitizeDocument(articleText);
             return View(articleDto);                                    //return view of DTO
         }
+
+        public IActionResult Topic(string[] topics)
+        {
+            var currentArticleEntities = _dbContext.Articles
+                .Where(a => a.Status == Status.Published)
+                .ToList();
+            foreach (var t in topics)
+                currentArticleEntities = currentArticleEntities
+                    .Where(a => a.Topic == t)
+                    .ToList();
+            var topicInfoDto = Mapper.Map<IEnumerable<ArticleInfoDto>>(currentArticleEntities);
+            return View(topicInfoDto);
+        }
+
+        public IActionResult Archive()
+        {
+            var articleEntities = _dbContext.Articles
+                .Where(a => a.Status == Status.Published)
+                .OrderByDescending(a => a.PublishDate);
+            var articleInfoDtos = Mapper.Map<IEnumerable<ArticleInfoDto>>(articleEntities);
+            return View(articleInfoDtos);
+        }
     }
 }
