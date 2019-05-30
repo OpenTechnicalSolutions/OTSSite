@@ -1,9 +1,17 @@
-﻿@{
+﻿@model IEnumerable<ArticleInfoDto>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<a asp-controller="Account" asp-action="Profile" asp-route-username="mikemikemike">link</a>
+@foreach (var a in Model)
+{
+    <a asp-action="Article" asp-controller="Article" asp-route-id="@a.ArticleId">
+        <div class="article-info-box">
+            <div class="article-info-header">@a.Title</div>
+            <div>@a.AuthorUserName</div>
+            <div>@a.Topic</div>
+        </div>
+    </a>
+    <br />
+}

@@ -1,0 +1,8 @@
+﻿@model GetArticleDto
+@{
+    ViewData["Title"] = "PreviewArticle";
+}
+
+<partial name="_DisplayArticle" model="@Model" />
+<a class="ots-button" asp-action="SetStatus" asp-route-id="@Model.ArticleId" asp-route-status="1">Approve</a>
+<a class="ots-button" asp-action="SetStatus" asp-route-id="@Model.ArticleId" asp-route-status="2">Decline</a>

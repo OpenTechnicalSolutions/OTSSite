@@ -127,7 +127,7 @@ namespace OTSSiteMVC.Controllers
             //Get user and return not found if no user.
             var userEntity = _userManager.Users.FirstOrDefault(u => u.UserName == username);
             if (userEntity == null)
-                return NotFound();
+                return RedirectToAction("NotFound", "Home");
             //Conver to DTO
             var userProfileDto = Mapper.Map<GetUserProfileDto>(userEntity);
             //Add roles and profile image

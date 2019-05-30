@@ -1,0 +1,25 @@
+﻿@model GetArticleDto
+@inject Microsoft.AspNetCore.Identity.UserManager<OTSSiteMVC.Entities.AppIdentityUser> userManager;
+@{ 
+    var username = userManager.Users.FirstOrDefault(u => u.Id == Model.AuthorId).UserName;
+}
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="article-box">
+        <div class="article-header">
+            <div class="article-title">
+                <h1>@Model.Title</h1>
+            </div>
+            <div class="article-info">
+                <h3>@username</h3>
+                <br />
+                <h3>@Model.Topic</h3>
+                <h3>@Model.PublishDate</h3>
+            </div>
+        </div>
+        <div class="article-body">
+            @Model.ArticleText
+        </div>
+    </div>

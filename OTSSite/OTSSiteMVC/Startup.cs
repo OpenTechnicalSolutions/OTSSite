@@ -18,6 +18,7 @@ using OTSSiteMVC.Configurations;
 using OTSSiteMVC.Repositories;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using UsefulExtensionMethods.IdentityExtensions;
 
 namespace OTSSiteMVC
 {
@@ -49,6 +50,7 @@ namespace OTSSiteMVC
             //Add Configureation Options
             services.AddOptions();
             services.Configure<FileWriteOptions>(Configuration.GetSection("FileWriteOptions"));
+            services.Configure<AboutInfoOptions>(Configuration.GetSection("AboutInfoOptions"));
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
@@ -86,14 +88,24 @@ namespace OTSSiteMVC
                 cfg.CreateMap<Models.CreateUserDto, Entities.AppIdentityUser>()
                     .ForMember(dest => dest.JoinDateTime, opt => opt.MapFrom(src => DateTime.Now));
                 cfg.CreateMap<Models.CreateArticleDto, Entities.Article>();
-
+                cfg.CreateMap<Models.UploadImageDto, Entities.ImageData>()
+                    .ForMember(dest => dest.FileName, opt => opt.MapFrom(src => src.File.FileName))
+                    .ForMember(dest => dest.ContentType, opt => opt.MapFrom(src => src.File.ContentType))
+                    .ForMember(dest => dest.Image, opt => opt.MapFrom(src => ImageMapHelper(src.File)));                    
                 //Entities to DTO's
                 cfg.CreateMap<Entities.AppIdentityUser, Models.GetUserProfileDto>()
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.AppIdentityUser, Models.UserConfigDto>()
                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
-                cfg.CreateMap<Entities.Article, Models.GetArticleDto>();
-                cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>();
+                cfg.CreateMap<Entities.Article, Models.GetArticleDto>()
+                    .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
+                cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>()
+                    .ForMember(dest => dest.AuthorUserName, opt => opt.MapFrom(src => src.UserName));
+                cfg.CreateMap<Entities.ImageData, Models.GetImageDto>()
+                    .ForMember(dest => dest.ImageId, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.ImageBase64, opt => opt.MapFrom(src => 
+                        String.Format("data:{0};base64,{1}", src.ContentType, 
+                            Convert.ToBase64String(src.Image))));
             });
 
 
@@ -117,6 +129,17 @@ namespace OTSSiteMVC
                     name: "api",
                     template: "api/{controller}/{action}");
             });
+        }
+
+        private byte[] ImageMapHelper(IFormFile file)
+        {
+            byte[] streamcont;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                streamcont = ms.ToArray();
+            }
+            return streamcont;
         }
     }
 }

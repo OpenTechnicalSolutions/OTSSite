@@ -1,0 +1,17 @@
+﻿@model UploadImageDto
+
+@inject  Microsoft.AspNetCore.Identity.UserManager<OTSSiteMVC.Entities.AppIdentityUser> _userManager;
+@{
+    ViewData["Title"] = "Upload";
+    var userEntity = await _userManager.GetUserAsync(User);
+}
+
+
+<form method="post">
+    <input type="hidden" asp-for="UserId" value="@userEntity.Id" />
+    <input type="hidden" asp-for="UserName" value="@userEntity.UserName" />
+    <Label asp-for="File"></Label>
+    <input asp-for="File" type="file" />
+    <input type="submit" value="Upload"/>
+</form>
+
