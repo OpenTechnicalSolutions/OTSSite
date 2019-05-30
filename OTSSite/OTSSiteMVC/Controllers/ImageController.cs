@@ -49,9 +49,6 @@ namespace OTSSiteMVC.Controllers
         public IActionResult Images(Guid id)
         {
             var imageEntity = _dbContext.Images.FirstOrDefault(i => i.Id == id);
-            using (MemoryStream ms = new MemoryStream(imageEntity.Image))
-            {
-            }
             return View();
         }
     }
