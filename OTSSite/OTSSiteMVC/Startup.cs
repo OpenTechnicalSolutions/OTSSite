@@ -101,6 +101,11 @@ namespace OTSSiteMVC
                     .ForMember(dest => dest.ArticleId, opt => opt.MapFrom(src => src.Id));
                 cfg.CreateMap<Entities.Article, Models.ArticleInfoDto>()
                     .ForMember(dest => dest.AuthorUserName, opt => opt.MapFrom(src => src.UserName));
+                cfg.CreateMap<Entities.ImageData, Models.GetImageDto>()
+                    .ForMember(dest => dest.ImageId, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.ImageBase64, opt => opt.MapFrom(src => 
+                        String.Format("data:{0};base64,{1}", src.ContentType, 
+                            Convert.ToBase64String(src.Image))));
             });
 
 

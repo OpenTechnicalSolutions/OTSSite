@@ -14,12 +14,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace OTSSiteMVC.Controllers
 {
-    public class ImageController : Controller
+    public class ImageHostController : Controller
     {
         private readonly UserManager<AppIdentityUser> _userManager;
         private readonly ApplicationDbContext _dbContext;
 
-        public ImageController(
+        public ImageHostController(
             ApplicationDbContext dbContext,
             UserManager<AppIdentityUser> userManager)
         {
@@ -45,11 +45,18 @@ namespace OTSSiteMVC.Controllers
                 throw new Exception("Failed to save image.");
             return RedirectToAction(nameof(Upload));
         }
-
+        [Authorize(Roles = "author,editor,administrator")]
+        [HttpGet]
         public IActionResult Images(Guid id)
         {
+            var imageEntity = _dbContext.Images;
+            var imageDtos = Mapper.Map<IEnumerable<GetImageDto>>(imageEntity);
+            return View(imageDtos);
+        }
+        public IActionResult Image(Guid id)
+        {
             var imageEntity = _dbContext.Images.FirstOrDefault(i => i.Id == id);
-            return View();
+            return File(imageEntity.Image, imageEntity.ContentType);
         }
     }
 }

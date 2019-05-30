@@ -4,6 +4,7 @@
 @{ 
     var user = await _userManager.GetUserAsync(User);
     var currentUserRoles = user == null ? new string[0] : await _userManager.GetRolesAsync(user);
+    var chosen = false;
 }
 
 
@@ -14,18 +15,31 @@
             <li class="nav-item">
                 <a class="nav-link text-dark">Author Dashboard</a>
             </li>
+            chosen = true;
         }
         @if (currentUserRoles.Contains("editor"))
         {
             <li class="nav-item">
                 <a class="nav-link text-dark">Editor Dashboard</a>
             </li>
+            chosen = true;
         }
         @if (currentUserRoles.Contains("administrator"))
         {
             <li class="nav-item">
                 <a asp-controller="Admin" asp-action="Index" class="nav-link text-dark">Admin Dashboard</a>
             </li>
+            chosen = true;
         }
+        @if(chosen)
+        {
+            <li class="nav-item">
+                <a asp-controller="Image" asp-action="Upload" class="nav-link text-dark">Upload Images</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Image" asp-action="Images" class="nav-link text-dark">View Images</a> 
+            </li>
+        }
+
     </ul>
 </nav>

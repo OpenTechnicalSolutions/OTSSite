@@ -1,0 +1,14 @@
+﻿@model  IEnumerable<GetImageDto>
+@{
+    ViewData["Title"] = "Images";
+}
+
+@foreach(var i in Model)
+{
+    <div>
+        <div><a asp-action="Image" asp-route-id="@i.ImageId">@i.ImageId</a></div><br />
+        <div><a asp-action="Profile" asp-controller="Account">@i.UserName</a></div><br />
+        <div><a asp-action="Image" asp-route-id="@i.ImageId"><img src="@i.ImageBase64" /></a></div>
+    </div>
+}
+
